@@ -1,0 +1,50 @@
+﻿@model MoneyTracker.Models.ChangeEvents.AllocationChange
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AllocationChange</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EffectiveDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EffectiveDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChangeTypeEnum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChangeTypeEnum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Allocation.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Allocation.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

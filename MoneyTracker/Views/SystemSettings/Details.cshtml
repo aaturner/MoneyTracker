@@ -1,0 +1,42 @@
+﻿@model MoneyTracker.Models.SystemSetting
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SystemSetting</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Setting)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Setting)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SettingValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SettingValue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SettingDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SettingDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

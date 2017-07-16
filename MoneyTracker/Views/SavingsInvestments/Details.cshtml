@@ -1,0 +1,114 @@
+﻿@model MoneyTracker.Models.Allocations.SavingsInvestment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SavingsInvestment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FromAccount.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromAccount.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsMonthly)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsMonthly)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecuranceDayNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecuranceDayNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecuranceEndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecuranceEndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Institution)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Institution)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentValue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DestinationAccount.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DestinationAccount.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

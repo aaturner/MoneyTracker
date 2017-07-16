@@ -1,0 +1,64 @@
+﻿@using MoneyTracker.DAL
+@model MoneyTracker.Models.TransactionTemp
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <h4>Transaction ID @Model.Id</h4>
+
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        @*@Html.HiddenFor(model => model.Id)*@
+        <div class="row">
+            <div class="form-group; col-md-2">
+                @Html.LabelFor(model => model.TransactionDate, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div>
+                    @Html.EditorFor(model => model.TransactionDate, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.TransactionDate, "", new {@class = "text-danger"})
+                </div>
+                @Html.LabelFor(model => model.Amount, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div>
+                    @Html.EditorFor(model => model.Amount, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
+                </div>
+                <input type="submit" value="Save" class="btn btn-default"/>
+            </div>
+
+            <div class="form-group; col-md-2">
+                @Html.LabelFor(model => model.EnteredDate, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div>
+                    @Html.EditorFor(model => model.EnteredDate, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.EnteredDate, "", new {@class = "text-danger"})
+                </div>
+                <div class="form-group; col-md-3; bottom-left">
+                    @Html.LabelFor(model => model.AllocationId, "Allocation", htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div>
+                        @Html.DropDownListFor(model => model.AllocationId, Model.AllocationListItems)
+                        @Html.ValidationMessageFor(model => model.AllocationId, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group; col-md-4">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new {@class = "control-label col-md-4"})
+                <div>
+                    @Html.EditorFor(model => model.Description, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+
+
+            @*<div class="form-group; col-md-3; bottom-left">
+                    @Html.LabelFor(model => model.AllocationId, "ItemId", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div>
+                        @Html.DropDownListFor(model => model.AllocationId, Model.)
+                        @Html.ValidationMessageFor(model => model.BudgetEntryId, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+        </div>
+    </div>
+}

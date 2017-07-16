@@ -1,0 +1,63 @@
+﻿@using MoneyTracker.Controllers.AppControllers
+@{
+    ViewBag.Title = "Home Page";
+
+}
+
+<div class="jumbotron">
+    <h1>Money Tracker</h1>
+    <p class="lead">Personal Finance Planning.</p>
+    <p>
+        <a href="@Url.Action("Index", "Budget")" class="btn btn-primary btn-lg">View Budget &raquo;</a>
+        <a href="@Url.Action("Index", "Forecast")" class="btn btn-primary btn-lg">Forecast &raquo;</a>
+        @*<a href="@Url.Action("Index", "SystemSettings")" class="btn btn-primary btn-lg">Sys &raquo;</a>*@
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Base Info</h2>
+        <div class="btn-group-vertical">
+            <a href="@Url.Action("Index", "People")" class="btn btn-primary btn-lg">People &raquo;</a>
+            <a href="@Url.Action("Index", "Accounts")" class="btn btn-primary btn-lg">Accounts &raquo;</a>
+            <a href="@Url.Action("Index", "AccountBalanceEntries")" class="btn btn-primary btn-lg">Account Balances &raquo;</a>
+            <a href="@Url.Action("Index", "Loans")" class="btn btn-primary btn-lg">Loans &raquo;</a>
+            <a href="@Url.Action("Index", "LoanBalanceEntries")" class="btn btn-primary btn-lg">Loan Balances &raquo;</a>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+        <h2>Allocations</h2>
+        <div class="btn-group-vertical">
+            <a href="@Url.Action("Index", "ExpenseCategories")" class="btn btn-primary btn-lg">Expense Categories&raquo;</a>
+            <a href="@Url.Action("Index", "Expenses")" class="btn btn-primary btn-lg">Expenses &raquo;</a>
+            <a href="@Url.Action("Index", "IncomeSources")" class="btn btn-primary btn-lg">Income Source &raquo;</a>
+            <a href="@Url.Action("Index", "Incomes")" class="btn btn-primary btn-lg">Incomes &raquo;</a>
+            <a href="@Url.Action("Index", "SavingsInvestments")" class="btn btn-primary btn-lg">Save / Invest &raquo;</a>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+        <h2>Tracking</h2>
+        <div class="btn-group-vertical">
+            <a href="@Url.Action("Index", "Transactions")" class="btn btn-primary btn-lg">Transactions &raquo;</a>
+            <a href="@Url.Action("Upload", "TransactionsUpload")" class="btn btn-primary btn-lg">Upload Transactions &raquo;</a>
+            <a href="@Url.Action("Index", "TransactionsUpload")" class="btn btn-primary btn-lg">Uncommitted Transactions &raquo;</a>
+            <a href="@Url.Action("Index", "AllocationChanges")" class="btn btn-primary btn-lg">Allocation Change Events &raquo;</a>
+            <a href="@Url.Action("Index", "AccountChanges")" class="btn btn-primary btn-lg">Account Change Events &raquo;</a>
+        </div>
+
+    </div>
+</div>
+<div class=" row">
+    <div class="col-md-3">
+        <p>Use this section to configure the people that will be spending and earning money and the bank accounts they will use.</p>
+    </div>
+    <div class="col-md-3">
+        <p>Here you setup the allocations that constitute your budget</p>
+    </div>
+    <div class="col-md-3">
+        <p>Track transactions (actual bank account credits and debits) and projected change events for predicting future financial outcomes.</p>
+    </div>
+</div>
+

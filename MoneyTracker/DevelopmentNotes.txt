@@ -1,0 +1,58 @@
+﻿Budget:
+	Display Saving/Investments
+	Use change events to change budget allocations
+	Test and refine change events by month
+	Test and refine display of Actual by month
+	Account Balances and predictions
+		Add Account balances for next 3 months and next 3 years
+			Loans
+			Savings
+			Banking
+	YTD
+		Balance on months this year (with data)
+	Grid Buttons
+		Add to category button to add new allocation to this category
+		Edit button (pencil) to edit an allocation
+
+Projections:
+	List budget Allocations, editable field, button to apply changes
+	Change events
+		filter and show relevant dates
+		create/edit/commit
+		
+	grid 
+		vertical: accounts, loans, savings/investment
+		horizontal: 8 months, 3 years
+
+Transactions:
+	Click to select row and display partial view of transaction
+	Partial view of transaction should have 
+		delete and save button
+		Editable fields
+	Commit button on TransactionsUpload moves from TransactionsTemp to Transactions
+	Save Uncommitted Saves changes to uncommitted transactions (Allocation dropdown)
+	Remove Select Column
+
+HouseKeeping
+	Edit links on Budget page
+		Include Loans, savings/investment
+	Edit links on Home page
+
+
+
+http://stackoverflow.com/questions/28371490/mvc4-net-how-to-place-dropdown-in-webgrid-cell
+
+https://en.wikipedia.org/wiki/Post/Redirect/Get
+http://www.c-sharpcorner.com/UploadFile/dacca2/implement-prg-pattern-in-mvc-architecture/+		
+
+
+
+https://www.codeproject.com/articles/875859/insert-update-and-delete-mvc-webgrid-data-using-jq
+
+Probably want to implement jquery datagrid for editing TransactionsTemp before committing, 
+and probably for Transactions as well.
+http://w2ui.com/web/demos/#!grid/grid-21
+
+
+
+

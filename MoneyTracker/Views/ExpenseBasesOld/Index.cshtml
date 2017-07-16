@@ -1,0 +1,112 @@
+﻿@model IEnumerable<MoneyTracker.Models.Allocations.Expense>
+
+@{
+    ViewBag.Title = "Expenses";
+}
+
+<h2>Expenses</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="expenseTable" class="table">
+    <thead>
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Account.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpenseCategory.Name)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsMonthly)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MonthlyRecuranceDayNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RecuranceEndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoansId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsFixedCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpenseCategory.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsMonthly)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MonthlyRecuranceDayNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecuranceEndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoansId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsFixedCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+<div class="btn-group-sm">
+    <a href="@Url.Action("Index", "ExpenseCategories")" class="btn btn-primary btn-lg">Expense Categories&raquo;</a>
+    <a href="@Url.Action("Index", "IncomeSources")" class="btn btn-primary btn-lg">Income Source &raquo;</a>
+    <a href="@Url.Action("Index", "Incomes")" class="btn btn-primary btn-lg">Income &raquo;</a>
+    <a href="@Url.Action("Index", "Budget")" class="btn btn-primary btn-lg">Budget &raquo;</a>
+</div>
+
+@* Load datatable js *@
+@section Scripts{
+    <link rel="stylesheet" type="text/css" href="~/Content/DataTables.css">
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#expenseTable').DataTable();
+        });
+    </script>
+}
