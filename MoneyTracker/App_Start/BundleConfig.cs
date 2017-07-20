@@ -24,7 +24,7 @@ namespace MoneyTracker
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/Slate_bootstrap.css",
+                      "~/Content/Superhero_bootstrap.css",
                       "~/Content/site.css"));
         }
     }
