@@ -13,9 +13,10 @@ namespace MoneyTracker.Utilities
 {
     public static class BudgetRowUtils
     {
-        public static PrimaryContext db = new PrimaryContext();
+        
         public static void ExpenseLines(List<BudgetRow> retList, int selectedMonth)  //need to distinguish year
         {
+            PrimaryContext db = new PrimaryContext();
             IEnumerable<ExpenseCategory> Categories = db.ExpenseCategories.ToList();
             decimal subTotalDecimal = Decimal.Zero;
             foreach (ExpenseCategory category in Categories)
@@ -43,6 +44,7 @@ namespace MoneyTracker.Utilities
 
         public static void IncomeLines(List<BudgetRow> retList, int selectedMonth)
         {
+            PrimaryContext db = new PrimaryContext();
             IEnumerable<IncomeSource> Sources = db.IncomeSources.ToList();
             decimal subTotalDecimal = Decimal.Zero;
             foreach (IncomeSource source in Sources)
@@ -66,6 +68,7 @@ namespace MoneyTracker.Utilities
 
         public static void LoanLines(List<BudgetRow> retList, int selectedMonth)
         {
+            PrimaryContext db = new PrimaryContext();
             IEnumerable<Loan> Loans = db.Loans.ToList();
             decimal subTotalDecimal = Decimal.Zero;
             foreach (Loan loan in Loans)
@@ -85,6 +88,7 @@ namespace MoneyTracker.Utilities
 
         public static void SaveInvestLines(List<BudgetRow> retList, int selectedMonth)
         {
+            PrimaryContext db = new PrimaryContext();
             IEnumerable<SavingsInvestment> siEnumerable = db.SavingsInvestments.ToList();
             decimal subTotalDecimal = decimal.Zero;
             foreach (var si in siEnumerable)
@@ -156,7 +160,8 @@ namespace MoneyTracker.Utilities
 
         private static decimal GetMonthTransactionActuals(Allocation allocation, int selectedMonth, int selectedYear = 0)
         {
-            if(selectedYear == 0) selectedYear = System.DateTime.Now.Year;
+            PrimaryContext db = new PrimaryContext();
+            if (selectedYear == 0) selectedYear = System.DateTime.Now.Year;
             var transactions =
                 db.Transactions.Where(x => x.AllocationId == allocation.Id &&
                                            x.TransactionDate.Month == selectedMonth &&
@@ -171,6 +176,7 @@ namespace MoneyTracker.Utilities
         }
         private static decimal GetMonthAllocation(Allocation allocation, int selectedMonth, int selectedYear = 0)
         {
+            PrimaryContext db = new PrimaryContext();
             if (selectedYear == 0) selectedYear = System.DateTime.Now.Year;
 
             //Apply change events
@@ -201,6 +207,7 @@ namespace MoneyTracker.Utilities
         
         private static decimal GetResidualToDate(Allocation allocation)
         {
+            PrimaryContext db = new PrimaryContext();
             //Get List of Months
             SystemSetting setting = db.SystemSettings.FirstOrDefault(x => x.Setting == Enums.SysSetting.AllocationOverUnderCalcDate);
             DateTime start = setting.SettingDate;

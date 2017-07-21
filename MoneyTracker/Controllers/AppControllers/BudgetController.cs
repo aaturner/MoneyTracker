@@ -14,6 +14,7 @@ namespace MoneyTracker.Controllers.AppControllers
     [Authorize]
     public class BudgetController : Controller
     {
+        
         public ActionResult Index(int selectedMonth = 0)
         {
             BudgetCenter budgetCenter = new BudgetCenter();

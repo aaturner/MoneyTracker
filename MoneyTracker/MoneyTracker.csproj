@@ -375,6 +375,8 @@
     <Content Include="Content\DataTables.css" />
     <Content Include="Content\Slate_bootstrap.css" />
     <Content Include="Content\Slate_bootstrap.min.css" />
+    <Content Include="Content\Superhero_bootstrap.css" />
+    <Content Include="Content\Superhero_bootstrap.min.css" />
     <Content Include="Content\w2ui-1.5.rc1.css" />
     <Content Include="Content\w2ui-1.5.rc1.min.css" />
     <Content Include="DevelopmentNotes.txt" />
