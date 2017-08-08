@@ -16,9 +16,10 @@ namespace MoneyTracker.Utilities
 {
     public static class ForecastRowUtils
     {
-        public static PrimaryContext db = new PrimaryContext();
+       
         public static List<ForecastRow> BuildForecastRows()
         {
+            PrimaryContext db = new PrimaryContext();
             IEnumerable<Account> accounts = db.Accounts.ToList();
             IEnumerable<Loan> loans = db.Loans.ToList();
             List<ForecastRow> retList = new List<ForecastRow>();
@@ -49,6 +50,7 @@ namespace MoneyTracker.Utilities
             retList.Add(BuildHeader1("Bank Accounts"));
             foreach (var account in accounts)
             {
+                PrimaryContext db = new PrimaryContext();
                 //Calculate current balance
                 decimal curentBal = GetCurrentBalance(account);
 
@@ -62,7 +64,7 @@ namespace MoneyTracker.Utilities
                 IEnumerable<AccountChange> accountChangeList = db.ChangeEvents.OfType<AccountChange>().Where(x => x.AccountId == account.Id);
 
                 //Build Projections
-                Dictionary<int, decimal> forecast = BuildProjections(retList, accountChangeList, curentBal, monthDelta);
+                Dictionary<int, decimal> forecast = BuildAccountProjections(retList, accountChangeList, curentBal, monthDelta);
 
                 //Build rows
                 retList.Add(new ForecastRow(Enums.TableRowType.expense, account.Name, forecast[0].ToString(), forecast[1].ToString(), forecast[2].ToString(),
@@ -80,7 +82,8 @@ namespace MoneyTracker.Utilities
             return retRow;
         }
 
-        private static Dictionary<int, decimal> BuildProjections(List<ForecastRow> retList,IEnumerable<ChangeEvent> accountChangeList, 
+
+        private static Dictionary<int, decimal> BuildAccountProjections(List<ForecastRow> retList,IEnumerable<ChangeEvent> accountChangeList, 
             decimal curentBal, decimal monthDelta)
         {
             var retDictionary = new Dictionary<int, decimal>();
@@ -153,6 +156,7 @@ namespace MoneyTracker.Utilities
 
         private static decimal GetMonthlyDelta(Account account)
         {
+            PrimaryContext db = new PrimaryContext();
             decimal monthDelta = decimal.Zero;
 
             decimal incomeSum = 0;
@@ -193,6 +197,7 @@ namespace MoneyTracker.Utilities
 
         private static Dictionary<int, decimal> GetLoanProjections(Loan loan)
         {
+            PrimaryContext db = new PrimaryContext();
             Dictionary<int, decimal> retDictionary = new Dictionary<int, decimal>();
 
             //Check that loan entry is valid
@@ -281,6 +286,7 @@ namespace MoneyTracker.Utilities
 
         private static decimal GetCurrentBalance(Account account)
         {
+            PrimaryContext db = new PrimaryContext();
             //This statement is simplified, will not always work
             AccountBalanceEntry lastEntry = db.AccountBalanceEntries.Where(x => x.AccountId == account.Id).FirstOrDefault();
             // AccountBalanceEntry lastEntry = db.AccountBalanceEntries.Where(x => x.AccountId == account.Id).Last();

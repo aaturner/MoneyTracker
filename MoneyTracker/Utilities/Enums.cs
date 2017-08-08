@@ -40,7 +40,17 @@ namespace MoneyTracker.Utilities
 
         public enum SysSetting
         {
-            AllocationOverUnderCalcDate
+            AllocationOverUnderCalcDate,
+            WeekStartDay
         }
+
+        public enum Recurance
+        {
+            None,
+            Weekly,
+            Monthly,
+            Yearly
+        }
+
     }
 }

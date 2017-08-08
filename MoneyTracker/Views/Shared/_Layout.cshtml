@@ -25,10 +25,9 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Budget", "Index", "Budget")</li>
                     <li>@Html.ActionLink("Forecast", "Index", "Forecast")</li>
-                    <li>@Html.ActionLink("Transactions", "Index", "Transactions")</li>
-                    <li>@Html.ActionLink("Expenses", "Index", "Expenses")</li>
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Settings","Index","SystemSettings")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    @*<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("People", "Index", "People")</li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -48,6 +47,8 @@
     @Scripts.Render()
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/cssjqryUi")
+    @Scripts.Render("~/bundles/jqueryui")
     @RenderSection("scripts", required: false)
 </body>
 </html>

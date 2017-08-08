@@ -11,7 +11,6 @@ using MoneyTracker.Models.ChangeEvents;
 
 namespace MoneyTracker.Controllers
 {
-    [Authorize]
     public class AllocationChangesController : Controller
     {
         private PrimaryContext db = new PrimaryContext();
@@ -19,7 +18,7 @@ namespace MoneyTracker.Controllers
         // GET: AllocationChanges
         public ActionResult Index()
         {
-            var changeEvents = db.ChangeEvents.OfType<AllocationChange>();
+            var changeEvents = db.ChangeEvents.OfType<AllocationChange>(); ;
             return View(changeEvents.ToList());
         }
 
@@ -50,7 +49,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EffectiveDateTime,Amount,ChangeTypeEnum,AllocationId")] AllocationChange allocationChange)
+        public ActionResult Create([Bind(Include = "Id,EffectiveDateTime,Amount,ChangeTypeEnum,Recurance,AllocationId")] AllocationChange allocationChange)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +83,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,EffectiveDateTime,Amount,ChangeTypeEnum,AllocationId")] AllocationChange allocationChange)
+        public ActionResult Edit([Bind(Include = "Id,EffectiveDateTime,Amount,ChangeTypeEnum,Recurance,AllocationId")] AllocationChange allocationChange)
         {
             if (ModelState.IsValid)
             {

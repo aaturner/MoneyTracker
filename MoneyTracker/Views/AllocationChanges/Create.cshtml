@@ -6,10 +6,10 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>AllocationChange</h4>
         <hr />
@@ -35,6 +35,14 @@
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(model => model.ChangeTypeEnum, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ChangeTypeEnum, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recurance, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Recurance, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Recurance, "", new { @class = "text-danger" })
             </div>
         </div>
 

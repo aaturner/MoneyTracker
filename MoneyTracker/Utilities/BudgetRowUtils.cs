@@ -25,7 +25,7 @@ namespace MoneyTracker.Utilities
                 foreach (Expense expense in category.Expenses)
                 {
                     //Apply change events
-                    decimal newAmount = GetMonthAllocation(expense, selectedMonth);
+                    decimal newAmount = General.GetAllocationWithChangeEventsByMonth(expense, selectedMonth);
                     
                     //Calculate Actuals
                     decimal transactSum = GetMonthTransactionActuals(expense, selectedMonth);
@@ -53,7 +53,7 @@ namespace MoneyTracker.Utilities
                 foreach (Income income in source.Incomes)
                 {
                     //Apply change events
-                    decimal newAmount = GetMonthAllocation(income,selectedMonth);
+                    decimal newAmount = General.GetAllocationWithChangeEventsByMonth(income,selectedMonth);
 
                     //Calculate actuals
                     decimal transactSum = GetMonthTransactionActuals(income, selectedMonth);
@@ -74,7 +74,7 @@ namespace MoneyTracker.Utilities
             foreach (Loan loan in Loans)
             {
                 //Apply change events
-                decimal newAmount = GetMonthAllocation(loan, selectedMonth);
+                decimal newAmount = General.GetAllocationWithChangeEventsByMonth(loan, selectedMonth);
 
                 //Calculate Actuals
                 decimal transactSum = GetMonthTransactionActuals(loan, selectedMonth);
@@ -94,7 +94,7 @@ namespace MoneyTracker.Utilities
             foreach (var si in siEnumerable)
             {
                 //Apply change events 
-                decimal newAmount = GetMonthAllocation(si, selectedMonth);
+                decimal newAmount = General.GetAllocationWithChangeEventsByMonth(si, selectedMonth);
                 decimal transactSum = GetMonthTransactionActuals(si, selectedMonth);
 
                 retList.Add(new BudgetRow("", si.Name, si.Description, "loan bal", newAmount, transactSum,
@@ -174,37 +174,7 @@ namespace MoneyTracker.Utilities
             }
             return transactSum;
         }
-        private static decimal GetMonthAllocation(Allocation allocation, int selectedMonth, int selectedYear = 0)
-        {
-            PrimaryContext db = new PrimaryContext();
-            if (selectedYear == 0) selectedYear = System.DateTime.Now.Year;
 
-            //Apply change events
-            decimal newAmount = allocation.Amount;
-            int days = DateTime.DaysInMonth(selectedYear, selectedMonth);
-            DateTime endOfSelectedMonth = new DateTime(selectedYear, selectedMonth, days, 23,59,59);
-            List<AllocationChange> changeEvents = db.ChangeEvents.OfType<AllocationChange>().Where(x => x.AllocationId == allocation.Id
-                                                  && x.EffectiveDateTime <= endOfSelectedMonth).ToList();
-            foreach (var change in changeEvents)
-            {
-                //compare effective date to current date
-                //if (change.EffectiveDateTime.Date <= endOfSelectedMonth)    !!Clean after testing
-                //{
-                    //change amount of allocation 
-                    if (change.ChangeTypeEnum.Equals(Enums.ChangeTypeEnum.LumpSum))
-                    {
-                        newAmount += change.Amount;
-                    }
-                    if (change.ChangeTypeEnum.Equals(Enums.ChangeTypeEnum.Percentage))
-                    {
-                        newAmount = newAmount * (1 + change.Amount);
-                    }
-                //}
-
-            }
-            return newAmount;
-        }
-        
         private static decimal GetResidualToDate(Allocation allocation)
         {
             PrimaryContext db = new PrimaryContext();
@@ -220,7 +190,7 @@ namespace MoneyTracker.Utilities
             foreach (Month m in Months)
             {
                 spentSum += GetMonthTransactionActuals(allocation, m.MonthNumber, m.Year);
-                allocatedSum += GetMonthAllocation(allocation, m.MonthNumber, m.Year);
+                allocatedSum += General.GetAllocationWithChangeEventsByMonth(allocation, m.MonthNumber, m.Year);
             }
             return allocatedSum - spentSum;
         }

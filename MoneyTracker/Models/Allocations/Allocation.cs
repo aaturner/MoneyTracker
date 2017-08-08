@@ -21,6 +21,7 @@ namespace MoneyTracker.Models.Allocations
 
         [DisplayName("Day of Month")]
         public int RecuranceDayNumber { get; set; }
+        [DataType(DataType.Date)]
         [DisplayName("Recur End")]
         public DateTime? RecuranceEndDate { get; set; }
 
