@@ -41,7 +41,7 @@ namespace MoneyTracker.Controllers
         // GET: AccountChanges/Create
         public ActionResult Create()
         {
-            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name");
+            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name").OrderBy(x => x.Text);
             return View();
         }
 
@@ -60,6 +60,7 @@ namespace MoneyTracker.Controllers
             }
 
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", accountChange.AccountId);
+
             return View(accountChange);
         }
 
@@ -75,7 +76,7 @@ namespace MoneyTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", accountChange.AccountId);
+            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", accountChange.AccountId).OrderBy(x => x.Text);
             return View(accountChange);
         }
 

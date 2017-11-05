@@ -42,7 +42,7 @@ namespace MoneyTracker.Controllers
         public ActionResult Create()
         {
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name");
-            ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name");
+            ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name").OrderBy(x => x.Text);
             return View();
         }
 
@@ -51,7 +51,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,ExpenseCategoryId")] Expense expense)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,Recurance,ApplicableMonth, RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,ExpenseCategoryId")] Expense expense)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace MoneyTracker.Controllers
             }
 
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", expense.AccountId);
-            ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name", expense.ExpenseCategoryId);
+            ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name", expense.ExpenseCategoryId).OrderBy(x => x.Text);
             return View(expense);
         }
 
@@ -78,7 +78,7 @@ namespace MoneyTracker.Controllers
                 return HttpNotFound();
             }
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", expense.AccountId);
-            ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name", expense.ExpenseCategoryId);
+            ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name", expense.ExpenseCategoryId).OrderBy(x => x.Text);
             return View(expense);
         }
 
@@ -96,7 +96,7 @@ namespace MoneyTracker.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", expense.AccountId);
-            ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name", expense.ExpenseCategoryId);
+            ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name", expense.ExpenseCategoryId).OrderBy(x => x.Text);
             return View(expense);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,27 +8,7 @@ namespace MoneyTracker.Utilities
 {
     public static class Enums
     {
-        public enum AllocationType
-        {
-            Expense,
-            Income,
-            Loan,
-            Savings,
-            Investment
-        };
 
-        public enum TransactionTypeEnum
-        {
-            Debit,
-            Credit,
-            Transfer
-        };
-
-        public enum ChangeTypeEnum
-        {
-            LumpSum,
-            Percentage
-        }
         public enum TableRowType
         {
             header1,
@@ -40,17 +21,14 @@ namespace MoneyTracker.Utilities
 
         public enum SysSetting
         {
+            [Display(Name = "Calc Residual From Date")]
             AllocationOverUnderCalcDate,
-            WeekStartDay
+            [Display(Name = "Week Start Day")]
+            WeekStartDay,
+            [Display(Name = "# Yr Displayed")]
+            NumYearsToDisplay
         }
 
-        public enum Recurance
-        {
-            None,
-            Weekly,
-            Monthly,
-            Yearly
-        }
 
     }
 }

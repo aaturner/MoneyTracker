@@ -40,7 +40,16 @@ namespace MoneyTracker.Controllers
         // GET: AllocationChanges/Create
         public ActionResult Create()
         {
-            ViewBag.AllocationId = new SelectList(db.Allocations, "Id", "Name");
+            ViewBag.AllocationId = new SelectList(db.Allocations, "Id", "Name").OrderBy(x => x.Text);
+            //IEnumerable<SelectListItem> selectList =   ---Discriminator not accessible via linq reflection 
+            //    from c in db.Allocations
+            //    select new SelectListItem
+            //    {
+            //        Text = c.GetType().GetProperty("Discriminator").ToString() + " - " + c.Name,
+            //        Value = c.AccountId.ToString()
+
+            //    };
+            //ViewBag.AllocationId = selectList;
             return View();
         }
 
@@ -74,7 +83,7 @@ namespace MoneyTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AllocationId = new SelectList(db.Allocations, "Id", "Name", allocationChange.AllocationId);
+            ViewBag.AllocationId = new SelectList(db.Allocations, "Id", "Name", allocationChange.AllocationId).OrderBy(x => x.Text);
             return View(allocationChange);
         }
 

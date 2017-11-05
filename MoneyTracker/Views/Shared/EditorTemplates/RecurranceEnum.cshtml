@@ -1,0 +1,10 @@
+﻿@using MoneyTracker.Models.Enums;
+@using MoneyTracker.Extensions;
+
+
+@{ 
+    var items = typeof(RecuranceEnum).GetItems((int?)Model);
+}
+
+@Html.DropDownList("",items)
+TestText

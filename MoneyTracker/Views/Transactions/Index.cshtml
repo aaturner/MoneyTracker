@@ -1,10 +1,22 @@
-﻿@model IEnumerable<MoneyTracker.Models.Transaction>
-
+﻿@using MoneyTracker.Models
+@using MoneyTracker.AppModels
+@model MoneyTracker.AppModels.TransactionCenter
 @{
+    
     ViewBag.Title = "Index";
+
 }
 
 <h2>Index</h2>
+<p>
+    @using (Html.BeginForm())
+    {
+        @Html.DropDownListFor(model => model.SelectedMonth, (IEnumerable<SelectListItem>)ViewBag.Months, "Month")
+        <input type="submit" value="submit" class="btn-primary btn-xs" />
+        @Html.DropDownListFor(model => model.SelectedYear, (IEnumerable<SelectListItem>)ViewBag.Years, "Year")
+        <input type="submit" value="submit" class="btn-primary btn-xs" />
+    }
+</p>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -13,31 +25,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Account.Name)
+                @Html.DisplayNameFor(model => model.TransactionList.FirstOrDefault().Account.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Allocation.Name)
+                @Html.DisplayNameFor(model => model.TransactionList.FirstOrDefault().Allocation.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TransactionType)
+                @Html.DisplayNameFor(model => model.TransactionList.FirstOrDefault().TransactionType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TransactionDate)
+                @Html.DisplayNameFor(model => model.TransactionList.FirstOrDefault().TransactionDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EnteredDate)
+                @Html.DisplayNameFor(model => model.TransactionList.FirstOrDefault().Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                @Html.DisplayNameFor(model => model.TransactionList.FirstOrDefault().Amount)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.TransactionList)
         {
             <tr>
                 <td>
@@ -53,17 +62,14 @@
                     @Html.DisplayFor(modelItem => item.TransactionDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EnteredDate)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.Ac@tionLink("Details", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>
@@ -79,10 +85,35 @@
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
 
     <script>
+
+        ///* Custom filtering function which will search data in column four between two values */
+        //$.fn.dataTable.ext.search.push(
+        //        function (settings, data, dataIndex) {
+        //                var min = parseInt($('#min').val(), 10);
+        //                var max = parseInt($('#max').val(), 10);
+        //                var age = parseFloat(data[3]) || 0; // use data for the age column
+
+        //                if ((isNaN(min) && isNaN(max)) ||
+        //                         (isNaN(min) && age <= max) ||
+        //                         (min <= age && isNaN(max)) ||
+        //                         (min <= age && age <= max))         {
+        //                        return true;
+        //                }
+        //                return false;
+        //        }
+        //);
+
         $(document).ready(function () {
             $('#transactionTable').DataTable({
                 "paging": false
             })
         });
+
+        // Event listener to the two range filtering inputs to redraw on input
+        $('#min, #max').keyup(function () {
+            table.draw();
+        });
     </script>
 }
+
+@*https://datatables.net/examples/plug-ins/range_filtering.html*@

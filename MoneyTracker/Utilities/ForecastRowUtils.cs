@@ -10,6 +10,7 @@ using MoneyTracker.DAL;
 using MoneyTracker.Models;
 using MoneyTracker.Models.Allocations;
 using MoneyTracker.Models.ChangeEvents;
+using MoneyTracker.Models.Enums;
 using MoneyTracker.Extensions;
 
 namespace MoneyTracker.Utilities
@@ -122,11 +123,11 @@ namespace MoneyTracker.Utilities
                     && change.EffectiveDateTime.Date >= new DateTime(date.Year, lastMonth, DateTime.DaysInMonth(date.Year, lastMonth)))
                     {
                         //change amount of allocation 
-                        if (change.ChangeTypeEnum.Equals(Enums.ChangeTypeEnum.LumpSum))
+                        if (change.ChangeTypeEnum.Equals(ChangeTypeEnum.LumpSum))
                         {
                             retDecimal += change.Amount;
                         }
-                        if (change.ChangeTypeEnum.Equals(Enums.ChangeTypeEnum.Percentage))
+                        if (change.ChangeTypeEnum.Equals(ChangeTypeEnum.Percentage))
                         {
                             retDecimal = currentAmount * (1 + change.Amount);
                         }
@@ -138,11 +139,11 @@ namespace MoneyTracker.Utilities
                     && change.EffectiveDateTime.Date >= new DateTime(date.Year -1, date.Month, DateTime.DaysInMonth(date.Year -1, date.Month)))
                     {
                         //change amount of allocation 
-                        if (change.ChangeTypeEnum.Equals(Enums.ChangeTypeEnum.LumpSum))
+                        if (change.ChangeTypeEnum.Equals(ChangeTypeEnum.LumpSum))
                         {
                             retDecimal += change.Amount;
                         }
-                        if (change.ChangeTypeEnum.Equals(Enums.ChangeTypeEnum.Percentage))
+                        if (change.ChangeTypeEnum.Equals(ChangeTypeEnum.Percentage))
                         {
                             retDecimal = currentAmount * (1 + change.Amount);
                         }

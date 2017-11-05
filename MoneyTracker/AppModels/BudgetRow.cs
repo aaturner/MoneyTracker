@@ -1,4 +1,5 @@
-﻿using MoneyTracker.Utilities;
+﻿using MoneyTracker.Models.Allocations;
+using MoneyTracker.Utilities;
 
 
 namespace MoneyTracker.AppModels
@@ -62,6 +63,7 @@ namespace MoneyTracker.AppModels
         public decimal? MoneyCol3 { get; set; }  //Residual
         public ForecastRow ForecastRow { get; set; }
         public Enums.TableRowType RowType { get; set; }
+       
 
     }
 }

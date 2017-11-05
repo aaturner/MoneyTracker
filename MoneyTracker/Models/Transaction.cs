@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using MoneyTracker.Models.Allocations;
+using MoneyTracker.Models.Enums;
 
 
 namespace MoneyTracker.Models
@@ -25,7 +26,7 @@ namespace MoneyTracker.Models
         }
 
         public int Id { get; set; }
-        public Enums.TransactionTypeEnum TransactionType { get; set; }
+        public TransactionTypeEnum TransactionType { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public System.DateTime TransactionDate { get; set; }

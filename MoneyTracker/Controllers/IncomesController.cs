@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using MoneyTracker.DAL;
 using MoneyTracker.Models.Allocations;
+using MoneyTracker.Extensions;
+using MoneyTracker.Models.Enums;
 
 namespace MoneyTracker.Controllers
 {
@@ -19,7 +21,7 @@ namespace MoneyTracker.Controllers
         // GET: Incomes
         public ActionResult Index()
         {
-            var allocations = db.Allocations.OfType<Income>();
+            var allocations = db.Allocations.OfType<Income>().OrderBy(x => x.Name);
             return View(allocations.ToList());
         }
 
@@ -42,9 +44,24 @@ namespace MoneyTracker.Controllers
         public ActionResult Create()
         {
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name");
+            //IEnumerable<RecuranceEnum> recuranceTypes = Enum.GetValues(typeof(RecuranceEnum)).Cast<RecuranceEnum>();
+            
+            //var recuranceId = from recurance in recuranceTypes
+            //                  select new SelectListItem
+            //                  {
+            //                      Text = recurance.ToString(),
+            //                      Value = ((int)recurance).ToString()
+            //                  };
+            //Income income = new Income();
+            
+            //income.RecuranceList = recuranceId;  //https://www.codeproject.com/Articles/662968/Creating-a-DropDownList-for-Enums-in-ASP-NET-MVC
+            //ViewBag.RecuranceId = new SelectList(recuranceId, "Value", "Text");
+           //ViewBag.RecuranceId = MvcExtensions.GetItems(Enums.Recurance);
             ViewBag.IncomeSourceId = new SelectList(db.IncomeSources, "Id", "Name");
             ViewBag.PersonId = new SelectList(db.Persons, "Id", "FullName");
-            return View();
+            Income income = new Income();
+            income.Recurance = RecurrenceEnum.Monthly;
+            return View(income);
         }
 
         // POST: Incomes/Create
@@ -52,7 +69,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,PersonId,IncomeSourceId")] Income income)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,Recurance,ApplicableMonth,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,PersonId,IncomeSourceId")] Income income)
         {
             if (ModelState.IsValid)
             {
@@ -82,6 +99,15 @@ namespace MoneyTracker.Controllers
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", income.AccountId);
             ViewBag.IncomeSourceId = new SelectList(db.IncomeSources, "Id", "Name", income.IncomeSourceId);
             ViewBag.PersonId = new SelectList(db.Persons, "Id", "FullName", income.PersonId);
+            //IEnumerable<RecuranceEnum> recuranceTypes = Enum.GetValues(typeof(RecuranceEnum)).Cast<RecuranceEnum>();
+            //var recuranceId = from recurance in recuranceTypes
+            //                  select new SelectListItem
+            //                  {
+            //                      Text = recurance.ToString(),
+            //                      Value = ((int)recurance).ToString()
+            //                  };
+            //income.RecuranceList = recuranceId;  //https://www.codeproject.com/Articles/662968/Creating-a-DropDownList-for-Enums-in-ASP-NET-MVC
+            //ViewBag.RecuranceId = new SelectList(recuranceId, "Value", "Text");
             return View(income);
         }
 
@@ -90,7 +116,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,IsMonthly,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,PersonId,IncomeSourceId")] Income income)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,IsMonthly,Recurance,ApplicableMonth,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,PersonId,IncomeSourceId")] Income income)
         {
             if (ModelState.IsValid)
             {

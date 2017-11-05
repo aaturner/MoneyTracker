@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            Account @*@Html.DisplayNameFor(model => model.FromAccount.Name)*@
+            @Html.DisplayNameFor(model => model.FromAccount.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -22,6 +22,12 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsMonthly)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Recurance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicableMonth)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RecuranceDayNumber)
@@ -51,6 +57,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsMonthly)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Recurance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicableMonth)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RecuranceDayNumber)

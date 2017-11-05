@@ -7,6 +7,8 @@ using MoneyTracker.Models;
 using MoneyTracker.Models.Allocations;
 using MoneyTracker.Models.ChangeEvents;
 using MoneyTracker.Models.DataObjects;
+using MoneyTracker.Extensions;
+using MoneyTracker.Models.Enums;
 
 namespace MoneyTracker.Utilities
 {
@@ -91,29 +93,55 @@ namespace MoneyTracker.Utilities
             {
                 retVal += GetChangeAmount(selectedMonth, selectedYear, retVal, change);
             }
+
+            //Apply Recurance
+            switch (allocation.Recurrence.Recurance)
+            {
+                case RecurrenceEnum.None:     //None
+                    if (!(allocation.Recurrence.RecuranceStartDate.Month == selectedMonth
+                        && allocation.Recurrence.RecuranceStartDate.Year == selectedYear))
+                    {
+                        retVal = decimal.Zero;
+                    }
+                    break;
+                case RecurrenceEnum.Weekly:     //Weekly
+                    DateTime date = new DateTime(selectedYear, selectedMonth, 1);
+                    retVal = retVal * date.GetWeeksInMonth();
+                    break;
+                case RecurrenceEnum.Monthly:     //Monthly
+                    //no change
+                    break;
+                case RecurrenceEnum.Yearly:     //Yearly
+                    if (!(allocation.Recurrence.RecuranceStartDate.Month == selectedMonth))
+                    {
+                        retVal = decimal.Zero;
+                    }
+                    break;
+            }
+
             return retVal;
         }
 
         private static decimal GetChangeAmount(int selectedMonth, int selectedYear, decimal sumingAmount, AllocationChange change)
         {
             decimal changeAmount = Decimal.Zero;
-            switch (change.Recurance)
+            switch (change.Recurrence.Recurance)
             {
-                case Enums.Recurance.None:
+                case RecurrenceEnum.None:
                     if (change.EffectiveDateTime.Month == selectedMonth
                         && change.EffectiveDateTime.Year == selectedYear)
                     {
                         changeAmount = CalcNewAmount(sumingAmount, change);
                     }
                     break;
-                case Enums.Recurance.Weekly:
+                case RecurrenceEnum.Weekly:
                     changeAmount = CalcNewAmount(sumingAmount, change) *
-                                   General.WeeksInMonth(selectedMonth, selectedYear);
+                                   General.WeeksInMonth(selectedMonth, selectedYear);  //TODO: this calc is wrong, need to /#weeks
                     break;
-                case Enums.Recurance.Monthly:
+                case RecurrenceEnum.Monthly:
                     changeAmount = CalcNewAmount(sumingAmount, change);
                     break;
-                case Enums.Recurance.Yearly:
+                case RecurrenceEnum.Yearly:
                     if (change.EffectiveDateTime.Month == selectedMonth)
                     {
                         changeAmount = CalcNewAmount(sumingAmount, change);
@@ -126,19 +154,37 @@ namespace MoneyTracker.Utilities
 
         }
 
+        public static int GetFirstTransactionYear()
+        {
+            PrimaryContext db = new PrimaryContext();
+            return db.Transactions.Min(x => x.TransactionDate).Year;
+        }
+
+        public static int YearsToDisplay()
+        {
+            PrimaryContext db = new PrimaryContext();
+            int futureYearsDisplay = 1;
+            if (db.SystemSettings.Any(x => x.Setting == Enums.SysSetting.NumYearsToDisplay))
+            {
+                futureYearsDisplay = Convert.ToInt16(db.SystemSettings.FirstOrDefault(x => x.Setting == Enums.SysSetting.NumYearsToDisplay).SettingValue);
+            }
+            return System.DateTime.Now.Year - GetFirstTransactionYear() + futureYearsDisplay;
+        }
         private static decimal CalcNewAmount(decimal sumingAmount, AllocationChange change)
         {
             decimal delta = Decimal.Zero;
-            if (change.ChangeTypeEnum.Equals(Enums.ChangeTypeEnum.LumpSum))
+            if (change.ChangeTypeEnum.Equals(ChangeTypeEnum.LumpSum))
             {
                 delta = change.Amount;
             }
-            if (change.ChangeTypeEnum.Equals(Enums.ChangeTypeEnum.Percentage))
+            if (change.ChangeTypeEnum.Equals(ChangeTypeEnum.Percentage))
             {
                 delta = sumingAmount * (1 + change.Amount);
             }
 
             return delta;
         }
+
+        
     }
 }

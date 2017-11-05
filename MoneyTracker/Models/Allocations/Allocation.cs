@@ -2,12 +2,16 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace MoneyTracker.Models.Allocations
 {
     public abstract class Allocation
     {
-
+        public Allocation()
+        {
+            ApplicableMonth = DateTime.Now;
+        }
 
         public int Id { get; set; }
 
@@ -17,13 +21,9 @@ namespace MoneyTracker.Models.Allocations
         [Required]
         public string Description { get; set; }
 
-        public Nullable<bool> IsMonthly { get; set; }
-
-        [DisplayName("Day of Month")]
-        public int RecuranceDayNumber { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayName("Recur End")]
-        public DateTime? RecuranceEndDate { get; set; }
+        //Frequency
+        public Nullable<bool> IsMonthly { get; set; }   //Depricated
+        public DataObjects.Recurrence Recurrence { get; set; }
 
         [DisplayName("Allocation Amount")]
         public decimal Amount { get; set; }

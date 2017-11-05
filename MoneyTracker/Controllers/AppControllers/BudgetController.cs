@@ -15,7 +15,7 @@ namespace MoneyTracker.Controllers.AppControllers
     public class BudgetController : Controller
     {
         
-        public ActionResult Index(int selectedMonth = 0)
+        public ActionResult Index(int selectedMonth = 0, int selectedYear = 0)
         {
             BudgetCenter budgetCenter = new BudgetCenter();
             ViewBag.Months = new SelectList(Enumerable.Range(1, 12).Select(x => new SelectListItem()
@@ -23,7 +23,14 @@ namespace MoneyTracker.Controllers.AppControllers
                 Text = CultureInfo.CurrentCulture.DateTimeFormat.AbbreviatedMonthNames[x - 1] + "(" + x + ")",
                 Value = x.ToString()
             }), "Value", "Text");
+            ViewBag.Years = new SelectList(Enumerable.Range(General.GetFirstTransactionYear(),
+                General.YearsToDisplay()).Select(x => new SelectListItem()
+            {
+                Text = x.ToString(),
+                Value = x.ToString()
+            }), "Value", "Text");
             budgetCenter.SelectedMonth = selectedMonth == 0 ? DateTime.Now.Month :  selectedMonth ;
+            budgetCenter.SelectedYear = selectedYear == 0 ? DateTime.Now.Year : selectedYear;
             budgetCenter.BudgetRows = BuildRows(budgetCenter.SelectedMonth);
             
             //TODO figure out month int versus current date issue, use recurance day when applicable

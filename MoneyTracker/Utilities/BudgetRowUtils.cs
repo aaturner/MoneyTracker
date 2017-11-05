@@ -18,7 +18,8 @@ namespace MoneyTracker.Utilities
         {
             PrimaryContext db = new PrimaryContext();
             IEnumerable<ExpenseCategory> Categories = db.ExpenseCategories.ToList();
-            decimal subTotalDecimal = Decimal.Zero;
+            decimal budgetSubTotalDecimal = Decimal.Zero;
+            decimal actualSubTotalDecimal = Decimal.Zero;
             foreach (ExpenseCategory category in Categories)
             {
                 retList.Add(new BudgetRow("", category.Name, Enums.TableRowType.header2));
@@ -33,20 +34,23 @@ namespace MoneyTracker.Utilities
                     //Calculate Budget running total for sysSetting to date
                     decimal residual = GetResidualToDate(expense);
 
-                retList.Add(new BudgetRow("", "", expense.Name, "", newAmount, transactSum,
+                    retList.Add(new BudgetRow("", "", expense.Name, "", newAmount, transactSum,
                         residual, Enums.TableRowType.expense));
-                    subTotalDecimal += newAmount;
+                    budgetSubTotalDecimal += newAmount;
+                    actualSubTotalDecimal += transactSum;
 
                 }
             }
-            retList.Find(x => x.Column1.Contains("Expense")).MoneyCol1 = subTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Expense")).MoneyCol1 = budgetSubTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Expense")).MoneyCol2 = actualSubTotalDecimal;
         }
 
         public static void IncomeLines(List<BudgetRow> retList, int selectedMonth)
         {
             PrimaryContext db = new PrimaryContext();
             IEnumerable<IncomeSource> Sources = db.IncomeSources.ToList();
-            decimal subTotalDecimal = Decimal.Zero;
+            decimal budgetSubTotalDecimal = Decimal.Zero;
+            decimal actualSubTotalDecimal = Decimal.Zero;
             foreach (IncomeSource source in Sources)
             {
                 retList.Add(new BudgetRow("", source.Name, Enums.TableRowType.header2));
@@ -60,17 +64,20 @@ namespace MoneyTracker.Utilities
 
                     retList.Add(new BudgetRow("", "", income.Name, "", newAmount, transactSum,
                         Enums.TableRowType.income));
-                    subTotalDecimal += newAmount;
+                    budgetSubTotalDecimal += newAmount;
+                    actualSubTotalDecimal += transactSum;
                 }
             }
-            retList.Find(x => x.Column1.Contains("Income")).MoneyCol1 = subTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Income")).MoneyCol1 = budgetSubTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Income")).MoneyCol2 = actualSubTotalDecimal;
         }
 
         public static void LoanLines(List<BudgetRow> retList, int selectedMonth)
         {
             PrimaryContext db = new PrimaryContext();
             IEnumerable<Loan> Loans = db.Loans.ToList();
-            decimal subTotalDecimal = Decimal.Zero;
+            decimal budgetSubTotalDecimal = Decimal.Zero;
+            decimal actualSubTotalDecimal = Decimal.Zero;
             foreach (Loan loan in Loans)
             {
                 //Apply change events
@@ -81,9 +88,11 @@ namespace MoneyTracker.Utilities
 
                 retList.Add(new BudgetRow("", loan.Name, loan.Description, "loan bal", newAmount, transactSum,
                     Enums.TableRowType.income));
-                subTotalDecimal += loan.Amount;
+                budgetSubTotalDecimal += newAmount;
+                actualSubTotalDecimal += transactSum;
             }
-            retList.Find(x => x.Column1.Contains("Loans")).MoneyCol1 = subTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Loans")).MoneyCol1 = budgetSubTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Loans")).MoneyCol2 = actualSubTotalDecimal;
         }
 
         public static void SaveInvestLines(List<BudgetRow> retList, int selectedMonth)
@@ -91,6 +100,7 @@ namespace MoneyTracker.Utilities
             PrimaryContext db = new PrimaryContext();
             IEnumerable<SavingsInvestment> siEnumerable = db.SavingsInvestments.ToList();
             decimal subTotalDecimal = decimal.Zero;
+            decimal actualSubTotalDecimal = decimal.Zero;
             foreach (var si in siEnumerable)
             {
                 //Apply change events 
@@ -99,9 +109,11 @@ namespace MoneyTracker.Utilities
 
                 retList.Add(new BudgetRow("", si.Name, si.Description, "loan bal", newAmount, transactSum,
                     Enums.TableRowType.income));
-                subTotalDecimal += si.Amount;
+                subTotalDecimal += newAmount;
+                actualSubTotalDecimal += transactSum;
             }
             retList.Find(x => x.Column1.Contains("Save/Invest")).MoneyCol1 = subTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Save/Invest")).MoneyCol2 = actualSubTotalDecimal;
         }
 
 
@@ -118,27 +130,53 @@ namespace MoneyTracker.Utilities
             BudgetRow retRow = new BudgetRow();
             retRow.Column1 = "Balance";
             //retRow.Column3 = "";
-            retRow.MoneyCol1 = FindBalance(retList);
+            retRow.MoneyCol1 = FindBalance(retList,1);
+            retRow.MoneyCol2 = FindBalance(retList,2);
             retRow.RowType = Enums.TableRowType.total;
             return retRow;
 
         }
-
-        public static decimal FindBalance(List<BudgetRow> retList)
+        /// <summary>
+        /// Get balance of a list of budget rows
+        /// </summary>
+        /// <param name="retList"></param>
+        /// <param name="column"> the colum number to sum (1 = Budget, 2 = Actual)s</param>
+        /// <returns></returns>
+        public static decimal FindBalance(List<BudgetRow> retList, int column)
         {
             decimal? balDecimal = Decimal.Zero;
-            foreach (var line in retList)
+            switch (column)
             {
-                if (line.RowType == Enums.TableRowType.income)
-                {
-                    balDecimal += line.MoneyCol1;
-                }
-                else if (line.RowType == Enums.TableRowType.expense)
-                {
-                    balDecimal -= line.MoneyCol1;
-                }
+                case 1:
+                    foreach (var line in retList)
+                    {
+                        if (line.RowType == Enums.TableRowType.income)
+                        {
+                            balDecimal += line.MoneyCol1;
+                        }
+                        else if (line.RowType == Enums.TableRowType.expense)
+                        {
+                            balDecimal -= line.MoneyCol1;
+                        }
+                    }
+                    if (!balDecimal.HasValue) balDecimal = decimal.Zero;
+                    break;
+                case 2:
+                    foreach (var line in retList)
+                    {
+                        if (line.RowType == Enums.TableRowType.income)
+                        {
+                            balDecimal += line.MoneyCol2;
+                        }
+                        else if (line.RowType == Enums.TableRowType.expense)
+                        {
+                            balDecimal -= line.MoneyCol2;
+                        }
+                    }
+                    if (!balDecimal.HasValue) balDecimal = decimal.Zero;
+                    break;
             }
-            if (!balDecimal.HasValue) balDecimal = decimal.Zero;
+
             return (decimal)balDecimal;
         }
 
