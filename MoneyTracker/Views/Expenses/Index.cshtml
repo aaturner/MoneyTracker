@@ -24,16 +24,8 @@
             @Html.DisplayNameFor(model => model.IsMonthly)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Recurance)
+            @Html.DisplayNameFor(model => model.Recurrence.RecurrenceFrequencyEnum)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicableMonth)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RecuranceDayNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RecuranceEndDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Amount)
@@ -59,16 +51,7 @@
             @Html.DisplayFor(modelItem => item.IsMonthly)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Recurance)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicableMonth)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RecuranceDayNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RecuranceEndDate)
+            @Html.DisplayFor(modelItem => item.Recurrence.RecurrenceFrequencyEnum)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Amount)

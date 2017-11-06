@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
+    
 }
 
 <h2>Edit</h2>
@@ -43,38 +44,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Recurance, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Recurance, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Recurance, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ApplicableMonth, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ApplicableMonth, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ApplicableMonth, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RecuranceDayNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RecuranceDayNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RecuranceDayNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RecuranceEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RecuranceEndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RecuranceEndDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
@@ -97,6 +66,9 @@
                 @Html.ValidationMessageFor(model => model.ExpenseCategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @Html.Partial("~/Views/Shared/Recurrence/Create.cshtml", Model)
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -25,8 +25,8 @@ namespace MoneyTracker.DAL
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
         public DbSet<IncomeSource> IncomeSources { get; set; }
         public DbSet<LoanBalanceEntry> LoanBalanceEntries { get; set; }
-        public DbSet<LoanPayment> LoanPayments { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
+        public virtual DbSet<Recurrence> Recurrences  { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionTemp> TransactionTemps { get; set; }
         public DbSet<SystemSetting> SystemSettings { get; set; }

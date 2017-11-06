@@ -5,14 +5,21 @@ x	Make recurrance an object on its own
 
 
 	Create partial View for recurrance.
-		Radio button for selector, date pickers, nullable dates
-		Shows fields that can be irrelevant, like Applicable month (only relevant to one time)
-	Edit view - needs updated, doesn't work
+		View in Expense Create complete
+		Controller binding working on create
+		Next
+			Edit View
+			remove old recurrence references
+			Add new create and edit view/controller code
+			Eventually hide recurrence fields based on Frequency
+
+	 
 
 
 
 
-
+Transactions
+	API to get from bank.
 
 
 

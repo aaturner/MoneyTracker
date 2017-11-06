@@ -5,11 +5,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MoneyTracker.Models.DataObjects
+namespace MoneyTracker.Models
 {
     public class Recurrence
     {
-        public Enums.RecurrenceEnum Recurance { get; set; }
+        public int Id { get; set; }
+        [DisplayName("Recurrence")]
+        public Enums.RecurrenceEnum RecurrenceFrequencyEnum { get; set; }
         [DataType(DataType.Date)]
         [DisplayName("Effective on")]
         public DateTime RecuranceStartDate { get; set; }

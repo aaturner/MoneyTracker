@@ -32,8 +32,8 @@ namespace MoneyTracker
                 FullName = "New Person", Id = 23,
                 Incomes = new Collection<Income>()
                 {
-                    new Income() {AccountId = 1, Amount = 20, ApplicableMonth = DateTime.Today.AddMonths(1)},
-                    new Income(){AccountId = 2, Amount = 25,ApplicableMonth = DateTime.Today}
+                    //new Income() {AccountId = 1, Amount = 20, new Models.DataObjects.Recurrence() { }},
+                    //new Income(){AccountId = 2, Amount = 25,ApplicableMonth = DateTime.Today}
                 }
             };
         }

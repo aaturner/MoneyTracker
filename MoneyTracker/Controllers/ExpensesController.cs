@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MoneyTracker.DAL;
 using MoneyTracker.Models.Allocations;
+using MoneyTracker.Models;
 
 namespace MoneyTracker.Controllers
 {
@@ -51,10 +52,12 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,Recurance,ApplicableMonth, RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,ExpenseCategoryId")] Expense expense)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Amount,AccountId,ExpenseCategoryId")] Expense expense,
+            [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)
             {
+                expense.Recurrence = recurrence;
                 db.Allocations.Add(expense);
                 db.SaveChanges();
                 return RedirectToAction("Index");

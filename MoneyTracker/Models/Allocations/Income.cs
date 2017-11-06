@@ -16,7 +16,6 @@ namespace MoneyTracker.Models.Allocations
         public virtual Person Person { get; set; }
 
 
-
         public int IncomeSourceId { get; set; }
         public virtual IncomeSource IncomeSource { get; set; }
 

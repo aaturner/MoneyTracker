@@ -10,7 +10,11 @@ namespace MoneyTracker.Models.Allocations
     {
         public Allocation()
         {
-            ApplicableMonth = DateTime.Now;
+            Recurrence Recurrence = new Recurrence()
+            {
+                RecuranceStartDate = DateTime.Now,
+                RecurrenceFrequencyEnum = Enums.RecurrenceEnum.Monthly
+            };
         }
 
         public int Id { get; set; }
@@ -23,7 +27,9 @@ namespace MoneyTracker.Models.Allocations
 
         //Frequency
         public Nullable<bool> IsMonthly { get; set; }   //Depricated
-        public DataObjects.Recurrence Recurrence { get; set; }
+
+        public int? RecurrenceId { get; set; }
+        public virtual Recurrence Recurrence { get; set; }
 
         [DisplayName("Allocation Amount")]
         public decimal Amount { get; set; }

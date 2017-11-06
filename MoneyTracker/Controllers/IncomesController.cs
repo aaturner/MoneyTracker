@@ -10,6 +10,7 @@ using MoneyTracker.DAL;
 using MoneyTracker.Models.Allocations;
 using MoneyTracker.Extensions;
 using MoneyTracker.Models.Enums;
+using MoneyTracker.Models;
 
 namespace MoneyTracker.Controllers
 {
@@ -60,7 +61,7 @@ namespace MoneyTracker.Controllers
             ViewBag.IncomeSourceId = new SelectList(db.IncomeSources, "Id", "Name");
             ViewBag.PersonId = new SelectList(db.Persons, "Id", "FullName");
             Income income = new Income();
-            income.Recurance = RecurrenceEnum.Monthly;
+            income.Recurrence.RecurrenceFrequencyEnum = RecurrenceEnum.Monthly;
             return View(income);
         }
 
@@ -69,10 +70,12 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,Recurance,ApplicableMonth,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,PersonId,IncomeSourceId")] Income income)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,Recurrence,ApplicableMonth,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,PersonId,IncomeSourceId")] Income income,
+                                    [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)
             {
+                income.Recurrence = recurrence;
                 db.Allocations.Add(income);
                 db.SaveChanges();
                 return RedirectToAction("Index");

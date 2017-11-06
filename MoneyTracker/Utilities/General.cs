@@ -95,7 +95,7 @@ namespace MoneyTracker.Utilities
             }
 
             //Apply Recurance
-            switch (allocation.Recurrence.Recurance)
+            switch (allocation.Recurrence.RecurrenceFrequencyEnum)
             {
                 case RecurrenceEnum.None:     //None
                     if (!(allocation.Recurrence.RecuranceStartDate.Month == selectedMonth
@@ -125,7 +125,7 @@ namespace MoneyTracker.Utilities
         private static decimal GetChangeAmount(int selectedMonth, int selectedYear, decimal sumingAmount, AllocationChange change)
         {
             decimal changeAmount = Decimal.Zero;
-            switch (change.Recurrence.Recurance)
+            switch (change.Recurrence.RecurrenceFrequencyEnum)
             {
                 case RecurrenceEnum.None:
                     if (change.EffectiveDateTime.Month == selectedMonth

@@ -14,10 +14,11 @@ namespace MoneyTracker.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime EffectiveDateTime { get; set; }  //Depricate
-        public DataObjects.Recurrence Recurrence { get; set; }
+
         public decimal Amount { get; set; }
         public Enums.ChangeTypeEnum ChangeTypeEnum { get; set; }
-        
 
+        public int? RecurrenceId { get; set; }
+        public virtual Recurrence Recurrence { get; set; }
     }
 }
