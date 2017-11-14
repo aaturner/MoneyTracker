@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using MoneyTracker.DAL;
 using MoneyTracker.Models.Allocations;
@@ -20,7 +16,7 @@ namespace MoneyTracker.Controllers
         // GET: Expenses
         public ActionResult Index()
         {
-            var allocations = db.Allocations.OfType<Expense>();
+            var allocations = db.Allocations.OfType<Expense>().OrderBy(x => x.Name);
             return View(allocations.ToList());
         }
 
@@ -57,7 +53,7 @@ namespace MoneyTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                expense.Recurrence = recurrence;
+                if(recurrence != null) expense.Recurrence = recurrence;
                 db.Allocations.Add(expense);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -80,6 +76,14 @@ namespace MoneyTracker.Controllers
             {
                 return HttpNotFound();
             }
+            if (expense.Recurrence == null)
+            {
+                expense.Recurrence = new Recurrence()
+                {
+                    RecuranceStartDate = System.DateTime.Today,
+                    RecurrenceFrequencyEnum = Models.Enums.RecurrenceEnum.Monthly
+                };
+            }
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", expense.AccountId);
             ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name", expense.ExpenseCategoryId).OrderBy(x => x.Text);
             return View(expense);
@@ -90,12 +94,29 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,IsMonthly,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,ExpenseCategoryId")] Expense expense)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Amount,AccountId,ExpenseCategoryId")] Expense expense,
+            [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(expense).State = EntityState.Modified;
+                Allocation targetExpense = db.Allocations.Find(expense.Id);
+                if (targetExpense.Recurrence == null)
+                {
+                    db.Recurrences.AddOrUpdate(recurrence);
+                    db.SaveChanges();
+                    expense.RecurrenceId = recurrence.Id;
+
+                }
+                else
+                {
+                    recurrence.Id = targetExpense.Recurrence.Id;
+                    expense.RecurrenceId = targetExpense.RecurrenceId;
+                    db.Recurrences.AddOrUpdate(recurrence);
+                }
+
+                db.Allocations.AddOrUpdate(expense);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", expense.AccountId);
@@ -124,7 +145,13 @@ namespace MoneyTracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Expense expense = (Expense)db.Allocations.Find(id);
+            if (expense.Recurrence != null)
+            {
+                var recurrence = db.Recurrences.Find(expense.RecurrenceId);
+                db.Recurrences.Remove(recurrence);
+            }
             db.Allocations.Remove(expense);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }

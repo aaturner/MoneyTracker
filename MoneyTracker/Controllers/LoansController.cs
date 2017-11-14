@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using MoneyTracker.DAL;
+using MoneyTracker.Models;
 using MoneyTracker.Models.Allocations;
 
 namespace MoneyTracker.Controllers
@@ -19,7 +17,7 @@ namespace MoneyTracker.Controllers
         // GET: Loans
         public ActionResult Index()
         {
-            var allocations = db.Allocations.OfType<Loan>();
+            var allocations = db.Allocations.OfType<Loan>().OrderBy(x => x.Name);
             return View(allocations.ToList());
         }
 
@@ -50,10 +48,12 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,Apr,AssetCurrentValue")] Loan loan)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,Amount,AccountId,Apr,AssetCurrentValue")] Loan loan,
+            [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)
             {
+                if(recurrence != null) loan.Recurrence = recurrence;
                 db.Allocations.Add(loan);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -75,7 +75,15 @@ namespace MoneyTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", loan.AccountId);
+            if (loan.Recurrence == null)
+            {
+                loan.Recurrence = new Recurrence()
+                {
+                    RecuranceStartDate = System.DateTime.Today,
+                    RecurrenceFrequencyEnum = Models.Enums.RecurrenceEnum.Monthly
+                };
+            }
+            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", loan.AccountId).OrderBy(x => x.Text);
             return View(loan);
         }
 
@@ -84,12 +92,29 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,IsMonthly,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,Apr,AssetCurrentValue")] Loan loan)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,IsMonthly,Amount,AccountId,Apr,AssetCurrentValue")] Loan loan,
+            [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(loan).State = EntityState.Modified;
+                Allocation targetLoan = db.Allocations.Find(loan.Id);
+                if (targetLoan.Recurrence == null)
+                {
+                    db.Recurrences.AddOrUpdate(recurrence);
+                    db.SaveChanges();
+                    loan.RecurrenceId = recurrence.Id;
+
+                }
+                else
+                {
+                    recurrence.Id = targetLoan.Recurrence.Id;
+                    loan.RecurrenceId = targetLoan.RecurrenceId;
+                    db.Recurrences.AddOrUpdate(recurrence);
+                }
+
+                db.Allocations.AddOrUpdate(loan);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", loan.AccountId);
@@ -117,6 +142,11 @@ namespace MoneyTracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Loan loan = (Loan)db.Allocations.Find(id);
+            if (loan.Recurrence != null)
+            {
+                var recurrence = db.Recurrences.Find(loan.RecurrenceId);
+                db.Recurrences.Remove(recurrence);
+            }
             db.Allocations.Remove(loan);
             db.SaveChanges();
             return RedirectToAction("Index");

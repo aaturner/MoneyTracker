@@ -185,6 +185,37 @@ namespace MoneyTracker.Utilities
             return delta;
         }
 
+        //Run once after upgrading to object based recurrence
+        public static void SetAllNullRecurrenceToValue()
+        {
+            PrimaryContext db = new PrimaryContext();
+            foreach (var allocation in db.Allocations.ToList())
+            {
+                if (allocation.Recurrence == null)
+                {
+                    allocation.Recurrence = new Recurrence()
+                    {
+                        RecuranceStartDate = System.DateTime.Today,
+                        RecurrenceFrequencyEnum = Models.Enums.RecurrenceEnum.Monthly
+                    };
+                    db.SaveChanges();
+                }
+            }
+
+            foreach (var change in db.ChangeEvents.ToList())
+            {
+                if (change.Recurrence == null)
+                {
+                    change.Recurrence = new Recurrence()
+                    {
+                        RecuranceStartDate = System.DateTime.Today,
+                        RecurrenceFrequencyEnum = Models.Enums.RecurrenceEnum.None
+                    };
+                    db.SaveChanges();
+                }
+            }
+        }
+
         
     }
 }

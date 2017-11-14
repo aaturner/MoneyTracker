@@ -9,6 +9,8 @@ namespace MoneyTracker
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            //MoneyTracker.Utilities.General.SetAllNullRecurrenceToValue();   //Turn on to convert 
+
         }
     }
 }

@@ -21,15 +21,6 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsMonthly)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RecuranceDayNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RecuranceEndDate)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Amount)
         </th>
         <th>
@@ -47,6 +38,9 @@
         <th>
             @Html.DisplayNameFor(model => model.DestinationAccount.Name)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Recurrence.RecurrenceFrequencyEnum)
+        </th>
         <th></th>
     </tr>
 
@@ -60,15 +54,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsMonthly)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RecuranceDayNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RecuranceEndDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Amount)
@@ -87,6 +72,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DestinationAccount.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Recurrence.RecurrenceFrequencyEnum)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

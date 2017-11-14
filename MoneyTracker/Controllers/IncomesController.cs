@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -38,6 +39,14 @@ namespace MoneyTracker.Controllers
             {
                 return HttpNotFound();
             }
+            if (income.Recurrence == null)
+            {
+                income.Recurrence = new Recurrence()
+                {
+                    RecuranceStartDate = System.DateTime.Today,
+                    RecurrenceFrequencyEnum = Models.Enums.RecurrenceEnum.Monthly
+                };
+            }
             return View(income);
         }
 
@@ -45,24 +54,9 @@ namespace MoneyTracker.Controllers
         public ActionResult Create()
         {
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name");
-            //IEnumerable<RecuranceEnum> recuranceTypes = Enum.GetValues(typeof(RecuranceEnum)).Cast<RecuranceEnum>();
-            
-            //var recuranceId = from recurance in recuranceTypes
-            //                  select new SelectListItem
-            //                  {
-            //                      Text = recurance.ToString(),
-            //                      Value = ((int)recurance).ToString()
-            //                  };
-            //Income income = new Income();
-            
-            //income.RecuranceList = recuranceId;  //https://www.codeproject.com/Articles/662968/Creating-a-DropDownList-for-Enums-in-ASP-NET-MVC
-            //ViewBag.RecuranceId = new SelectList(recuranceId, "Value", "Text");
-           //ViewBag.RecuranceId = MvcExtensions.GetItems(Enums.Recurance);
             ViewBag.IncomeSourceId = new SelectList(db.IncomeSources, "Id", "Name");
             ViewBag.PersonId = new SelectList(db.Persons, "Id", "FullName");
-            Income income = new Income();
-            income.Recurrence.RecurrenceFrequencyEnum = RecurrenceEnum.Monthly;
-            return View(income);
+            return View();
         }
 
         // POST: Incomes/Create
@@ -70,12 +64,12 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,Recurrence,ApplicableMonth,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,PersonId,IncomeSourceId")] Income income,
-                                    [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,Amount,AccountId,PersonId,IncomeSourceId")] Income income,
+            [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)
             {
-                income.Recurrence = recurrence;
+                if (recurrence != null) income.Recurrence = recurrence;
                 db.Allocations.Add(income);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -99,18 +93,17 @@ namespace MoneyTracker.Controllers
             {
                 return HttpNotFound();
             }
+            if (income.Recurrence == null)
+            {
+                income.Recurrence = new Recurrence()
+                {
+                    RecuranceStartDate = System.DateTime.Today,
+                    RecurrenceFrequencyEnum = Models.Enums.RecurrenceEnum.Monthly
+                };
+            }
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", income.AccountId);
-            ViewBag.IncomeSourceId = new SelectList(db.IncomeSources, "Id", "Name", income.IncomeSourceId);
+            ViewBag.IncomeSourceId = new SelectList(db.IncomeSources, "Id", "Name", income.IncomeSourceId).OrderBy(x => x.Text);
             ViewBag.PersonId = new SelectList(db.Persons, "Id", "FullName", income.PersonId);
-            //IEnumerable<RecuranceEnum> recuranceTypes = Enum.GetValues(typeof(RecuranceEnum)).Cast<RecuranceEnum>();
-            //var recuranceId = from recurance in recuranceTypes
-            //                  select new SelectListItem
-            //                  {
-            //                      Text = recurance.ToString(),
-            //                      Value = ((int)recurance).ToString()
-            //                  };
-            //income.RecuranceList = recuranceId;  //https://www.codeproject.com/Articles/662968/Creating-a-DropDownList-for-Enums-in-ASP-NET-MVC
-            //ViewBag.RecuranceId = new SelectList(recuranceId, "Value", "Text");
             return View(income);
         }
 
@@ -119,12 +112,29 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,IsMonthly,Recurance,ApplicableMonth,RecuranceDayNumber,RecuranceEndDate,Amount,AccountId,PersonId,IncomeSourceId")] Income income)
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,Amount,AccountId,PersonId,IncomeSourceId")] Income income,
+            [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(income).State = EntityState.Modified;
+                Allocation targetExpense = db.Allocations.Find(income.Id);
+                if (targetExpense.Recurrence == null)
+                {
+                    db.Recurrences.AddOrUpdate(recurrence);
+                    db.SaveChanges();
+                    income.RecurrenceId = recurrence.Id;
+
+                }
+                else
+                {
+                    recurrence.Id = targetExpense.Recurrence.Id;
+                    income.RecurrenceId = targetExpense.RecurrenceId;
+                    db.Recurrences.AddOrUpdate(recurrence);
+                }
+
+                db.Allocations.AddOrUpdate(income);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", income.AccountId);
@@ -154,6 +164,11 @@ namespace MoneyTracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Income income = (Income)db.Allocations.Find(id);
+            if (income.Recurrence != null)
+            {
+                var recurrence = db.Recurrences.Find(income.RecurrenceId);
+                db.Recurrences.Remove(recurrence);
+            }
             db.Allocations.Remove(income);
             db.SaveChanges();
             return RedirectToAction("Index");

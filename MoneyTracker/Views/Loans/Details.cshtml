@@ -38,26 +38,6 @@
             @Html.DisplayNameFor(model => model.IsMonthly)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsMonthly)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RecuranceDayNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RecuranceDayNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RecuranceEndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RecuranceEndDate)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Amount)
         </dt>
@@ -81,6 +61,8 @@
         <dd>
             @Html.DisplayFor(model => model.AssetCurrentValue)
         </dd>
+        
+        @Html.Partial("~/Views/Shared/Recurrence/Details.cshtml")
 
     </dl>
 </div>

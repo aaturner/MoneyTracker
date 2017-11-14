@@ -52,37 +52,7 @@
         </dd>
 
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Recurrence.RecurrenceFrequencyEnum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Recurrence.RecurrenceFrequencyEnum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Recurrence.RecuranceStartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Recurrence.RecuranceStartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Recurrence.RecuranceEndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Recurrence.RecuranceEndDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Recurrence.RecuranceDayNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Recurrence.RecuranceDayNumber)
-        </dd>
+        @Html.Partial("~/Views/Shared/Recurrence/Delete.cshtml")
 
     </dl>
 
