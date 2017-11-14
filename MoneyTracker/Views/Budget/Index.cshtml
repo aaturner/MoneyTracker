@@ -66,12 +66,39 @@
                         break;
                 }
                 <tr style="@style">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Column1) 
-                    </td>
-                    <td style="padding-right: 10px">
-                        @Html.DisplayFor(modelItem => item.Column2)
-                    </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Column1) 
+                </td>
+                    @{switch (item.RowType)
+
+                        {
+                            case Enums.TableRowType.expense:
+                                <td style="text-align: right">
+                                    <button type="submit" class="btn btn-primary btn-xs" onclick="location.href='@Url.Action("Edit", "Expenses", new { id = item.AllocationId })'">
+                                        <span style ="background-size: 70%"class="glyphicon glyphicon-edit glyphicon-align-right"></span>
+                                    </button>
+                                </td>
+                                break;
+                            case Enums.TableRowType.income:
+                                <td style="text-align: right">
+                                    <button type="submit" class="btn btn-primary btn-xs" onclick="location.href='@Url.Action("Edit", "Incomes", new { id = item.AllocationId })'">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                </td>
+                                break;
+                            case Enums.TableRowType.header2:
+                                <td style ="alignment: right">
+                                    @Html.DisplayFor(modelItem => item.Column2)
+                                </td>
+                                break;
+
+                            default:
+                                <td style="alignment: right">
+                                    @Html.DisplayFor(modelItem => item.Column2)
+                                </td>
+                                break;
+                        }
+                    }
                     <td>
                         @Html.DisplayFor(modelItem => item.Column3)
                     </td>

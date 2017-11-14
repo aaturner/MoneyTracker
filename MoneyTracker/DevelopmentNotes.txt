@@ -5,13 +5,13 @@ x	Make recurrance an object on its own
 
 
 	Create partial View for recurrance.
-		View in Expense Create complete
-		Controller binding working on create
+x		View in Expense Create complete
+x		Controller binding working on create
 		Next
-			Edit View
-			remove old recurrence references
-			Add new create and edit view/controller code
-			Eventually hide recurrence fields based on Frequency
+x			Edit View
+x			remove old recurrence references
+x			Add new create and edit view/controller code
+x			Eventually hide recurrence fields based on Frequency
 
 	 
 
@@ -33,6 +33,9 @@ Budget:
 	Grid Buttons
 		Add to category button to add new allocation to this category
 		Edit button (pencil) to edit an allocation
+
+Enums
+	Consolidate Model and Utility Enums
 
 System Settings
 	Find out how to do them right

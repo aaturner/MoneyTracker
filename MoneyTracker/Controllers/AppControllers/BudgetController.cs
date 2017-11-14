@@ -55,7 +55,8 @@ namespace MoneyTracker.Controllers.AppControllers
             retList.Add(BudgetRowUtils.BuildSummaryRow(retList));
             if (retList.Count == 0)
             {
-                retList.Add(new BudgetRow("TableRowSimple was found to be empty in the TableSimpleController", "", "", "", 0, 0, Enums.TableRowType.summary));
+                retList.Add(new BudgetRow("TableRowSimple was found to be empty in the TableSimpleController", "", "", "", 0, 0, 
+                    Enums.TableRowType.summary, 0));
             }
             //retList.Add(new BudgetRow("","",TableRowType.expense));
             

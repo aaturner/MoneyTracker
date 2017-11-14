@@ -208,33 +208,50 @@ namespace MoneyTracker.Utilities
             List<Transaction> transactionsResult;
             decimal transactionsAmount = decimal.Zero;
 
-            //TODO: This section needs cleaned up
-            try
+            //Still need to select most recent entry
+            if(db.LoanBalanceEntries.Any(x => x.LoanId == loan.Id))
             {
                 balEntry = db.LoanBalanceEntries.First(x => x.LoanId == loan.Id);
             }
-            catch (Exception e)
-            {
-                throw new Exception("Invalid balance entry for loan:" + loan.Name + Environment.NewLine+ e.Message);
-            }
-            try
+            if (db.Allocations.Any(x => x.Id == loan.Id))
             {
                 payment = db.Allocations.First(x => x.Id == loan.Id).Amount;
             }
-            catch (Exception e)
-            {
-                throw new Exception("Invalid payment entry for loan:" + loan.Name + Environment.NewLine + e.Message);
-            }
-            try
+            if (db.Transactions.Any(x => x.AllocationId == loan.Id &&
+                                         x.TransactionDate > balEntry.Date))
             {
                 transactionsResult = db.Transactions.Where(x => x.AllocationId == loan.Id &&
                                                                 x.TransactionDate > balEntry.Date).ToList();
-                if(transactionsResult.Any()) transactionsAmount = transactionsResult.AsQueryable().Sum(x => x.Amount);
+                transactionsAmount = transactionsResult.AsQueryable().Sum(x => x.Amount);
             }
-            catch (Exception e)
-            {
-                throw new Exception("Invalid transactions result for loan:" + loan.Name + Environment.NewLine + e.Message);
-            }
+
+            //TODO: This section needs cleaned up
+            //try
+            //{
+            //    balEntry = db.LoanBalanceEntries.First(x => x.LoanId == loan.Id);
+            //}
+            //catch (Exception e)
+            //{
+            //    throw new Exception("Invalid balance entry for loan:" + loan.Name + Environment.NewLine+ e.Message);
+            //}
+            //try
+            //{
+            //    payment = db.Allocations.First(x => x.Id == loan.Id).Amount;
+            //}
+            //catch (Exception e)
+            //{
+            //    throw new Exception("Invalid payment entry for loan:" + loan.Name + Environment.NewLine + e.Message);
+            //}
+            //try
+            //{
+            //    transactionsResult = db.Transactions.Where(x => x.AllocationId == loan.Id &&
+            //                                                    x.TransactionDate > balEntry.Date).ToList();
+            //    if(transactionsResult.Any()) transactionsAmount = transactionsResult.AsQueryable().Sum(x => x.Amount);
+            //}
+            //catch (Exception e)
+            //{
+            //    throw new Exception("Invalid transactions result for loan:" + loan.Name + Environment.NewLine + e.Message);
+            //}
             //in future log exception and continue, use NoBalEntry method 
 
             //Correct for time passed since entry = workingBal

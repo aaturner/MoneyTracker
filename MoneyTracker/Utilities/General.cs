@@ -81,20 +81,7 @@ namespace MoneyTracker.Utilities
             PrimaryContext db = new PrimaryContext();
             if (selectedYear == 0) selectedYear = System.DateTime.Now.Year;
             decimal retVal = allocation.Amount;
-            int days = DateTime.DaysInMonth(selectedYear, selectedMonth);
-            DateTime endOfSelectedMonth = new DateTime(selectedYear, selectedMonth, days, 23,59,59);
 
-            List<AllocationChange> changeEvents = db.ChangeEvents.OfType<AllocationChange>().Where(x => x.AllocationId == allocation.Id
-                                                                                                        && x.EffectiveDateTime <= endOfSelectedMonth).ToList();
-            changeEvents = changeEvents.OrderBy(change => change.EffectiveDateTime).ToList();
-
-            //Apply change events
-            foreach (var change in changeEvents)
-            {
-                retVal += GetChangeAmount(selectedMonth, selectedYear, retVal, change);
-            }
-
-            //Apply Recurance
             switch (allocation.Recurrence.RecurrenceFrequencyEnum)
             {
                 case RecurrenceEnum.None:     //None
@@ -103,18 +90,27 @@ namespace MoneyTracker.Utilities
                     {
                         retVal = decimal.Zero;
                     }
+                    else
+                    {
+                        retVal += GetTotalChangeAmount(selectedMonth, selectedYear, retVal, allocation);
+                    }
                     break;
                 case RecurrenceEnum.Weekly:     //Weekly
                     DateTime date = new DateTime(selectedYear, selectedMonth, 1);
+                    retVal += GetTotalChangeAmount(selectedMonth, selectedYear, retVal, allocation);
                     retVal = retVal * date.GetWeeksInMonth();
                     break;
                 case RecurrenceEnum.Monthly:     //Monthly
-                    //no change
+                    retVal += GetTotalChangeAmount(selectedMonth, selectedYear, retVal, allocation);
                     break;
                 case RecurrenceEnum.Yearly:     //Yearly
                     if (!(allocation.Recurrence.RecuranceStartDate.Month == selectedMonth))
                     {
                         retVal = decimal.Zero;
+                    }
+                    else
+                    {
+                        retVal += GetTotalChangeAmount(selectedMonth, selectedYear, retVal, allocation);
                     }
                     break;
             }
@@ -122,37 +118,54 @@ namespace MoneyTracker.Utilities
             return retVal;
         }
 
-        private static decimal GetChangeAmount(int selectedMonth, int selectedYear, decimal sumingAmount, AllocationChange change)
+        private static decimal GetTotalChangeAmount(int selectedMonth, int selectedYear, decimal sumingAmount,
+            Allocation allocation)
         {
-            decimal changeAmount = Decimal.Zero;
-            switch (change.Recurrence.RecurrenceFrequencyEnum)
+            PrimaryContext db = new PrimaryContext();
+            decimal retVal = decimal.Zero;
+
+            int days = DateTime.DaysInMonth(selectedYear, selectedMonth);
+            DateTime endOfSelectedMonth = new DateTime(selectedYear, selectedMonth, days, 23, 59, 59);
+            DateTime beginOfSelectedMonth = new DateTime(selectedYear, selectedMonth, 1, 00, 00, 01);
+            
+            List<AllocationChange> changeEvents = db.ChangeEvents.OfType<AllocationChange>().Where(x => x.AllocationId == allocation.Id
+                                                                                 && x.EffectiveDateTime <= endOfSelectedMonth).ToList();
+            changeEvents = changeEvents.OrderBy(change => change.EffectiveDateTime).ToList();
+
+            foreach(var changeEvent in changeEvents)
             {
-                case RecurrenceEnum.None:
-                    if (change.EffectiveDateTime.Month == selectedMonth
-                        && change.EffectiveDateTime.Year == selectedYear)
+                if (allocation.Recurrence.RecurrenceFrequencyEnum == Models.Enums.RecurrenceEnum.None)
+                {
+                    if (changeEvent.EffectiveDateTime > beginOfSelectedMonth)
                     {
-                        changeAmount = CalcNewAmount(sumingAmount, change);
+                        retVal += CalcNewAmount(retVal, changeEvent);
                     }
-                    break;
-                case RecurrenceEnum.Weekly:
-                    changeAmount = CalcNewAmount(sumingAmount, change) *
-                                   General.WeeksInMonth(selectedMonth, selectedYear);  //TODO: this calc is wrong, need to /#weeks
-                    break;
-                case RecurrenceEnum.Monthly:
-                    changeAmount = CalcNewAmount(sumingAmount, change);
-                    break;
-                case RecurrenceEnum.Yearly:
-                    if (change.EffectiveDateTime.Month == selectedMonth)
-                    {
-                        changeAmount = CalcNewAmount(sumingAmount, change);
-                    }
-                    break;
-
-                
+                }
+                else //All but no recurrence return a change per interval
+                {
+                    retVal += CalcNewAmount(retVal, changeEvent);
+                }
             }
-            return changeAmount;
-
+            return retVal;
         }
+
+
+        //calc change amount lump or percentage
+        private static decimal CalcNewAmount(decimal sumingAmount, AllocationChange change)
+        {
+            decimal delta = Decimal.Zero;
+            if (change.ChangeTypeEnum.Equals(ChangeTypeEnum.LumpSum))
+            {
+                delta = change.Amount;
+            }
+            if (change.ChangeTypeEnum.Equals(ChangeTypeEnum.Percentage))
+            {
+                delta = sumingAmount * (1 + change.Amount);
+            }
+
+            return delta;
+        }
+
 
         public static int GetFirstTransactionYear()
         {
@@ -169,20 +182,6 @@ namespace MoneyTracker.Utilities
                 futureYearsDisplay = Convert.ToInt16(db.SystemSettings.FirstOrDefault(x => x.Setting == Enums.SysSetting.NumYearsToDisplay).SettingValue);
             }
             return System.DateTime.Now.Year - GetFirstTransactionYear() + futureYearsDisplay;
-        }
-        private static decimal CalcNewAmount(decimal sumingAmount, AllocationChange change)
-        {
-            decimal delta = Decimal.Zero;
-            if (change.ChangeTypeEnum.Equals(ChangeTypeEnum.LumpSum))
-            {
-                delta = change.Amount;
-            }
-            if (change.ChangeTypeEnum.Equals(ChangeTypeEnum.Percentage))
-            {
-                delta = sumingAmount * (1 + change.Amount);
-            }
-
-            return delta;
         }
 
         //Run once after upgrading to object based recurrence

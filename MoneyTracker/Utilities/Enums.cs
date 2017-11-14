@@ -15,6 +15,8 @@ namespace MoneyTracker.Utilities
             header2,
             income,
             expense,
+            loan,
+            si,
             summary,
             total
         }

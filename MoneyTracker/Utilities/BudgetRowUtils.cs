@@ -34,8 +34,11 @@ namespace MoneyTracker.Utilities
                     //Calculate Budget running total for sysSetting to date
                     decimal residual = GetResidualToDate(expense);
 
+                    //Add budget row to retList
                     retList.Add(new BudgetRow("", "", expense.Name, "", newAmount, transactSum,
-                        residual, Enums.TableRowType.expense));
+                        residual, Enums.TableRowType.expense, expense.Id));
+
+                    //Sub Totals
                     budgetSubTotalDecimal += newAmount;
                     actualSubTotalDecimal += transactSum;
 
@@ -63,7 +66,7 @@ namespace MoneyTracker.Utilities
                     decimal transactSum = GetMonthTransactionActuals(income, selectedMonth);
 
                     retList.Add(new BudgetRow("", "", income.Name, "", newAmount, transactSum,
-                        Enums.TableRowType.income));
+                        Enums.TableRowType.income, income.Id));
                     budgetSubTotalDecimal += newAmount;
                     actualSubTotalDecimal += transactSum;
                 }
@@ -87,7 +90,7 @@ namespace MoneyTracker.Utilities
                 decimal transactSum = GetMonthTransactionActuals(loan, selectedMonth);
 
                 retList.Add(new BudgetRow("", loan.Name, loan.Description, "loan bal", newAmount, transactSum,
-                    Enums.TableRowType.income));
+                    Enums.TableRowType.loan, loan.Id));
                 budgetSubTotalDecimal += newAmount;
                 actualSubTotalDecimal += transactSum;
             }
@@ -108,7 +111,7 @@ namespace MoneyTracker.Utilities
                 decimal transactSum = GetMonthTransactionActuals(si, selectedMonth);
 
                 retList.Add(new BudgetRow("", si.Name, si.Description, "loan bal", newAmount, transactSum,
-                    Enums.TableRowType.income));
+                    Enums.TableRowType.si, si.Id));
                 subTotalDecimal += newAmount;
                 actualSubTotalDecimal += transactSum;
             }

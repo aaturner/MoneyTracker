@@ -15,16 +15,16 @@
             @Html.DisplayNameFor(model => model.EffectiveDateTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.ChangeTypeEnum)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Recurance)
+            @Html.DisplayNameFor(model => model.Allocation.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Allocation.Name)
+            @Html.DisplayNameFor(model => model.Recurrence.RecurrenceFrequencyEnum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
         </th>
         <th></th>
     </tr>
@@ -35,16 +35,16 @@
             @Html.DisplayFor(modelItem => item.EffectiveDateTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.ChangeTypeEnum)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Recurance)
+            @Html.DisplayFor(modelItem => item.Allocation.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Allocation.Name)
+            @Html.DisplayFor(modelItem => item.Recurrence.RecurrenceFrequencyEnum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
