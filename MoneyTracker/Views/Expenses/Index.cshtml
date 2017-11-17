@@ -4,12 +4,13 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Expenses</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table id="expensesTable" class="table">
+    <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -23,11 +24,7 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsMonthly)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Recurrence.RecurrenceFrequencyEnum)
-        </th>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Amount)
@@ -37,8 +34,9 @@
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -50,9 +48,6 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsMonthly)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Recurrence.RecurrenceFrequencyEnum)
         </td>
         <td>
@@ -62,11 +57,31 @@
             @Html.DisplayFor(modelItem => item.ExpenseCategory.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <button type="submit" class="btn btn-primary btn-xs" title="Edit"
+                    onclick="location.href='@Url.Action("Edit", "Expenses", new { id = item.Id })'">
+                <span class="glyphicon glyphicon-edit"></span>
+            </button>
+            |
+            <button type="submit" class="btn btn-primary btn-xs" title="Delete"
+                    onclick="location.href='@Url.Action("Delete", "Expenses", new { id = item.Id })'">
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
         </td>
     </tr>
-}
-
+    }
+    </tbody>
 </table>
+
+@* Load datatable js *@
+@section Scripts{
+    <link rel="stylesheet" type="text/css" href="~/Content/DataTables.css">
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#expensesTable').DataTable({
+                    "paging": false
+            });
+        });
+    </script>
+}

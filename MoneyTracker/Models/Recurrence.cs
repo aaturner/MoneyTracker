@@ -31,28 +31,5 @@ namespace MoneyTracker.Models
         public int? RecuranceDayNumber { get; set; }
 
 
-        //Temp for display until apply javascript date pickers
-        public string RecuranceStartDateString { get
-            {
-                string retval = RecuranceStartDate == null ? "Not Set" : this.RecuranceStartDate.ToString("d");
-                return retval;
-            } }
-        public string RecuranceEndDateString
-        {
-            get
-            {
-                string retval = RecuranceEndDate == null ? "Not Set" : string.Format("0:d", this.RecuranceEndDate);
-                return retval;
-            }
-        }
-        public string RecuranceDayNumberString
-        {
-            get
-            {
-                string retval = RecuranceDayNumber == null ? "Not Set" : string.Format("0:d", this.RecuranceDayNumber);
-                return retval;
-            }
-        }
-
     }
 }

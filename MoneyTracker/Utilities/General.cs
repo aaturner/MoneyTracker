@@ -134,7 +134,7 @@ namespace MoneyTracker.Utilities
 
             foreach(var changeEvent in changeEvents)
             {
-                if (allocation.Recurrence.RecurrenceFrequencyEnum == Models.Enums.RecurrenceEnum.None)
+                if (allocation.Recurrence.RecurrenceFrequencyEnum == RecurrenceEnum.None)
                 {
                     if (changeEvent.EffectiveDateTime > beginOfSelectedMonth)
                     {
@@ -143,7 +143,7 @@ namespace MoneyTracker.Utilities
                 }
                 else //All but no recurrence return a change per interval
                 {
-                    retVal += CalcNewAmount(retVal, changeEvent);
+                   if(changeEvent.IsRecurring) retVal += CalcNewAmount(retVal, changeEvent);
                 }
             }
             return retVal;
@@ -196,19 +196,6 @@ namespace MoneyTracker.Utilities
                     {
                         RecuranceStartDate = System.DateTime.Today,
                         RecurrenceFrequencyEnum = Models.Enums.RecurrenceEnum.Monthly
-                    };
-                    db.SaveChanges();
-                }
-            }
-
-            foreach (var change in db.ChangeEvents.ToList())
-            {
-                if (change.Recurrence == null)
-                {
-                    change.Recurrence = new Recurrence()
-                    {
-                        RecuranceStartDate = System.DateTime.Today,
-                        RecurrenceFrequencyEnum = Models.Enums.RecurrenceEnum.None
                     };
                     db.SaveChanges();
                 }

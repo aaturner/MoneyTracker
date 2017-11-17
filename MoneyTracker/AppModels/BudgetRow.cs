@@ -18,7 +18,7 @@ namespace MoneyTracker.AppModels
             RowType = rowType;
         }
         public BudgetRow(string column1, string column2, string column3, string column4, decimal moneyCol1, decimal moneyCol2, 
-            Enums.TableRowType rowType, int allocationId)
+            Enums.TableRowType rowType, int allocationId, decimal residual = 0)
         {
             Column1 = column1;
             Column2 = column2;
@@ -28,22 +28,16 @@ namespace MoneyTracker.AppModels
             MoneyCol2 = moneyCol2;
             RowType = rowType;
             AllocationId = allocationId;
+            MoneyCol3 = residual;
         }
         //TODO: Chain Constructors
 
 
-        public BudgetRow(string column1, string column2, string column3, string column4, decimal moneyCol1, decimal moneyCol2,
-        decimal moneyCol3, Enums.TableRowType rowType, int allocationId)
+
+
+        public BudgetRow(string column1, string loanName, string rowType, string column4, string moneyCol1, Enums.TableRowType moneyCol2)
         {
-            Column1 = column1;
-            Column2 = column2;
-            Column3 = column3;
-            Colomn4 = column4;
-            MoneyCol1 = moneyCol1;
-            MoneyCol2 = moneyCol2;
-            MoneyCol3 = moneyCol3;
-            RowType = rowType;
-            AllocationId = allocationId;
+            throw new System.NotImplementedException();
         }
 
         public int AllocationId { get; set; }

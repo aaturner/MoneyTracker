@@ -358,6 +358,15 @@
     <Compile Include="DAL\PrimaryMigrations\201711110530363_11102017a.Designer.cs">
       <DependentUpon>201711110530363_11102017a.cs</DependentUpon>
     </Compile>
+    <Compile Include="DAL\PrimaryMigrations\201711152126373_11122017b.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201711152126373_11122017b.Designer.cs">
+      <DependentUpon>201711152126373_11122017b.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PrimaryMigrations\201711162347135_11162017c.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201711162347135_11162017c.Designer.cs">
+      <DependentUpon>201711162347135_11162017c.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\AttributeExtensions.cs" />
     <Compile Include="Extensions\DateExtensions.cs" />
     <Compile Include="Extensions\MvcExtensions.cs" />
     <Compile Include="Models\AccountChange.cs" />
@@ -738,6 +747,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DAL\PrimaryMigrations\201711110530363_11102017a.resx">
       <DependentUpon>201711110530363_11102017a.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201711152126373_11122017b.resx">
+      <DependentUpon>201711152126373_11122017b.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201711162347135_11162017c.resx">
+      <DependentUpon>201711162347135_11162017c.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

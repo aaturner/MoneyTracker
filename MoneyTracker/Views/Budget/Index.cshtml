@@ -13,11 +13,11 @@
     { test = "net yet"; }
 }
 @using MoneyTracker.AppModels
+@using MoneyTracker.Models.Enums
 @using MoneyTracker.Utilities
 @model MoneyTracker.AppModels.BudgetCenter
 
 <h2>Budget</h2>
-@*TODO: Add buttons to the table to add items to a category or edit existing items.  Might want to be able to edit in place*@
 <p>
     @using (Html.BeginForm())
     {
@@ -27,14 +27,6 @@
         <input type="submit" value="submit" class="btn-primary btn-xs" />
     }
 </p>
-
-@*<div class="form-group">
-    @Html.LabelFor(model => model.SelectedPeriod, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.SelectedPeriod, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.SelectedPeriod, "", new { @class = "text-danger" })
-    </div>
-</div>*@
 
 <div class="container">
     <h2></h2>
@@ -47,7 +39,7 @@
                 <th>Item</th>
                 <th style="text-align:right">Budget</th>
                 <th style="text-align:right">Actual</th>
-                <th style="text-align:right">Residual</th>
+                <th style="text-align:right">Residual / Bal.</th>
             </tr>
         </thead>
         <tbody>
@@ -66,39 +58,133 @@
                         break;
                 }
                 <tr style="@style">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Column1) 
-                </td>
-                    @{switch (item.RowType)
-
+                    
+                    @*Column 1*@
+                    @{
+                    if (item.RowType == Enums.TableRowType.header1)
+                    {
+                        switch (item.AllocationId)
                         {
-                            case Enums.TableRowType.expense:
+                            case (int) Enums.AllocationType.Loan:
+                                <td style="text-align: left">
+                                    <button type="submit" class="btn btn-default btn-xs" title="New"
+                                            onclick="location.href = '@Url.Action("Create", "Loans")'">
+                                        <span class="glyphicon glyphicon-flash"></span>
+                                    </button>
+                                    @Html.DisplayFor(modelItem => item.Column1)
+                                </td>
+                                break;
+                            case (int) Enums.AllocationType.Expense:
+                                <td style="text-align: left">
+                                    <button type="submit" class="btn btn-default btn-xs" title="New"
+                                            onclick="location.href = '@Url.Action("Create", "Expenses")'">
+                                        <span class="glyphicon glyphicon-flash"></span>
+                                    </button>
+                                    @Html.DisplayFor(modelItem => item.Column1)
+                                </td>
+                                break;
+                            case (int) Enums.AllocationType.Income:
+                                <td style="text-align: left">
+                                    <button type="submit" class="btn btn-default btn-xs" title="New"
+                                            onclick="location.href = '@Url.Action("Create", "Incomes")'">
+                                        <span class="glyphicon glyphicon-flash"></span>
+                                    </button>
+                                    @Html.DisplayFor(modelItem => item.Column1)
+                                </td>
+                                break;
+                            case (int) Enums.AllocationType.Si:
+                                <td style="text-align: left">
+                                    <button type="submit" class="btn btn-default btn-xs" title="New"
+                                            onclick="location.href = '@Url.Action("Create", "SavingsInvestments")'">
+                                        <span class="glyphicon glyphicon-flash"></span>
+                                    </button>
+                                    @Html.DisplayFor(modelItem => item.Column1)
+                                </td>
+                                break;
+                            default:
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.Column1)
+                                </td>*@
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Column1)    
+                        </td>
+                    }
+
+
+
+                    @*Column 2*@
+                    switch (item.RowType)
+
+                    {
+                        case Enums.TableRowType.expense:
                                 <td style="text-align: right">
-                                    <button type="submit" class="btn btn-primary btn-xs" onclick="location.href='@Url.Action("Edit", "Expenses", new { id = item.AllocationId })'">
+                                    <button type="submit" class="btn btn-default btn-xs" title="1x change "
+                                            onclick="location.href='@Url.Action("Create", "AllocationChanges",new { id = item.AllocationId})'">
+                                        <span style="background-size: 70%" class="glyphicon glyphicon-plus-sign"></span>
+                                    </button>
+                                    <button type="submit" class="btn btn-default btn-xs" title="Edit" 
+                                            onclick="location.href='@Url.Action("Edit", "Expenses", new { id = item.AllocationId })'">
                                         <span style ="background-size: 70%"class="glyphicon glyphicon-edit glyphicon-align-right"></span>
                                     </button>
                                 </td>
+
                                 break;
                             case Enums.TableRowType.income:
                                 <td style="text-align: right">
-                                    <button type="submit" class="btn btn-primary btn-xs" onclick="location.href='@Url.Action("Edit", "Incomes", new { id = item.AllocationId })'">
+                                    <button type="submit" class="btn btn-default btn-xs" title="1x change " 
+                                            onclick="location.href='@Url.Action("Create", "AllocationChanges",new { id = item.AllocationId})'">
+                                        <span style ="background-size: 70%"class="glyphicon glyphicon-plus-sign"></span>
+                                    </button>
+                                    <button type="submit" class="btn btn-default btn-xs" title="Edit"
+                                            onclick="location.href = '@Url.Action("Edit", "Incomes", new {id = item.AllocationId})'">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </td>
                                 break;
+                            case Enums.TableRowType.loan:
+                                <td style="text-align: right">
+                                    <button type="submit" class="btn btn-default btn-xs" title="1x change " 
+                                            onclick="location.href='@Url.Action("Create", "LoanBalanceEntries",new { id = item.AllocationId})'">
+                                        <span style ="background-size: 70%"class="glyphicon glyphicon-plus-sign"></span>
+                                    </button>
+                                    <button type="submit" class="btn btn-default btn-xs" title="Edit"
+                                            onclick="location.href='@Url.Action("Edit", "Loans", new { id = item.AllocationId })'">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                </td>
+                                break;
+                            case Enums.TableRowType.si:
+                                <td style="text-align: right">
+                                    <button type="submit" class="btn btn-default btn-xs" title="1x change " 
+                                            onclick="location.href='@Url.Action("Create", "AllocationChanges",new { id = item.AllocationId})'">
+                                        <span style ="background-size: 70%"class="glyphicon glyphicon-plus-sign"></span>
+                                    </button>
+                                    <button type="submit" class="btn btn-default btn-xs" title="Edit"
+                                            onclick="location.href='@Url.Action("Edit", "SavingsInvestments", new { id = item.AllocationId })'">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                </td>
+                                    break;
                             case Enums.TableRowType.header2:
-                                <td style ="alignment: right">
+                                <td>
                                     @Html.DisplayFor(modelItem => item.Column2)
                                 </td>
                                 break;
 
                             default:
-                                <td style="alignment: right">
+                                <td>
                                     @Html.DisplayFor(modelItem => item.Column2)
                                 </td>
                                 break;
                         }
                     }
+
+                    @*Column 3-6*@
                     <td>
                         @Html.DisplayFor(modelItem => item.Column3)
                     </td>
@@ -124,10 +210,7 @@
 <h3>Adjust budget items</h3>
 <div class="btn-group-sm">
     <a href="@Url.Action("Index", "ExpenseCategories")" class="btn btn-primary btn-lg">Expense Categories&raquo;</a>
-    <a href="@Url.Action("Index", "Expenses")" class="btn btn-primary btn-lg">Expenses&raquo;</a>
     <a href="@Url.Action("Index", "IncomeSources")" class="btn btn-primary btn-lg">Income Source &raquo;</a>
     <a href="@Url.Action("Index", "Incomes")" class="btn btn-primary btn-lg">Income &raquo;</a>
-    <a href="@Url.Action("Index", "SavingsInvestments")" class="btn btn-primary btn-lg">SaveInvest &raquo;</a>
-    <a href="@Url.Action("Index", "Loans")" class="btn btn-primary btn-lg">Loans &raquo;</a>
     <a href="@Url.Action("Index", "SystemSettings")" class="btn btn-primary btn-lg">Sys &raquo;</a>
 </div>

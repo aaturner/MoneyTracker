@@ -7,6 +7,8 @@ using MoneyTracker.Models.Allocations;
 using MoneyTracker.Models.ChangeEvents;
 using MoneyTracker.Models.DataObjects;
 using System;
+using MoneyTracker.Extensions;
+
 //using MoneyTracker.Models.ChangeEvents;
 
 namespace MoneyTracker.Utilities
@@ -36,7 +38,7 @@ namespace MoneyTracker.Utilities
 
                     //Add budget row to retList
                     retList.Add(new BudgetRow("", "", expense.Name, "", newAmount, transactSum,
-                        residual, Enums.TableRowType.expense, expense.Id));
+                        Enums.TableRowType.expense, expense.Id, residual));
 
                     //Sub Totals
                     budgetSubTotalDecimal += newAmount;
@@ -81,21 +83,26 @@ namespace MoneyTracker.Utilities
             IEnumerable<Loan> Loans = db.Loans.ToList();
             decimal budgetSubTotalDecimal = Decimal.Zero;
             decimal actualSubTotalDecimal = Decimal.Zero;
+
             foreach (Loan loan in Loans)
             {
                 //Apply change events
-                decimal newAmount = General.GetAllocationWithChangeEventsByMonth(loan, selectedMonth);
+                decimal newAmount = General.GetAllocationWithChangeEventsByMonth(loan, selectedMonth,selectedMonth);
 
                 //Calculate Actuals
                 decimal transactSum = GetMonthTransactionActuals(loan, selectedMonth);
 
-                retList.Add(new BudgetRow("", loan.Name, loan.Description, "loan bal", newAmount, transactSum,
-                    Enums.TableRowType.loan, loan.Id));
+                //Get Balance
+                Account account = db.Accounts.Find(loan.AccountId);
+                decimal currentBal = EstimatedLoanBalance(loan);
+
+                retList.Add(new BudgetRow("", "",loan.Name, "", newAmount, transactSum, 
+                    Enums.TableRowType.loan, loan.Id, currentBal));
                 budgetSubTotalDecimal += newAmount;
                 actualSubTotalDecimal += transactSum;
             }
-            retList.Find(x => x.Column1.Contains("Loans")).MoneyCol1 = budgetSubTotalDecimal;
-            retList.Find(x => x.Column1.Contains("Loans")).MoneyCol2 = actualSubTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Loan")).MoneyCol1 = budgetSubTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Loan")).MoneyCol2 = actualSubTotalDecimal;
         }
 
         public static void SaveInvestLines(List<BudgetRow> retList, int selectedMonth)
@@ -110,21 +117,22 @@ namespace MoneyTracker.Utilities
                 decimal newAmount = General.GetAllocationWithChangeEventsByMonth(si, selectedMonth);
                 decimal transactSum = GetMonthTransactionActuals(si, selectedMonth);
 
-                retList.Add(new BudgetRow("", si.Name, si.Description, "loan bal", newAmount, transactSum,
+                retList.Add(new BudgetRow("", "",si.Name, "", newAmount, transactSum,
                     Enums.TableRowType.si, si.Id));
                 subTotalDecimal += newAmount;
                 actualSubTotalDecimal += transactSum;
             }
-            retList.Find(x => x.Column1.Contains("Save/Invest")).MoneyCol1 = subTotalDecimal;
-            retList.Find(x => x.Column1.Contains("Save/Invest")).MoneyCol2 = actualSubTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Save")).MoneyCol1 = subTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Save")).MoneyCol2 = actualSubTotalDecimal;
         }
 
 
-        public static BudgetRow BuildHeader1(string headerTitle)
+        public static BudgetRow BuildHeader1(Enums.AllocationType allocationType)
         {
             BudgetRow retRow = new BudgetRow();
-            retRow.Column1 = headerTitle;
+            retRow.Column1 = allocationType.ToDisplayName();
             retRow.RowType = Enums.TableRowType.header1;
+            retRow.AllocationId = (int)allocationType;
             return retRow;
         }
 
@@ -139,6 +147,7 @@ namespace MoneyTracker.Utilities
             return retRow;
 
         }
+        
         /// <summary>
         /// Get balance of a list of budget rows
         /// </summary>
@@ -236,5 +245,24 @@ namespace MoneyTracker.Utilities
             return allocatedSum - spentSum;
         }
 
+        public static decimal EstimatedLoanBalance(Loan loan)
+        {
+            PrimaryContext db = new PrimaryContext();
+            decimal retVal = decimal.Zero;
+            if(db.LoanBalanceEntries.Any(x => x.LoanId == loan.Id))
+            {
+                List<LoanBalanceEntry> loanBalList = db.LoanBalanceEntries.Where(x => x.LoanId == loan.Id).OrderBy(x => x.Date).ToList();
+                LoanBalanceEntry entry = loanBalList.Last();
+                decimal lastKnown = entry.Amount;
+                TimeSpan span = DateTime.Now - entry.Date;
+                int months = span.GetMonths();
+                decimal allocatedPayments = loan.Amount * months ;
+                decimal interest = ((lastKnown - allocatedPayments / 2) * loan.Apr / 1200) * months;
+                retVal = lastKnown - allocatedPayments + interest;
+            }
+            
+
+            return retVal;
+        }
     }
 }

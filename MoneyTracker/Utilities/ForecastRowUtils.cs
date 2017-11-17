@@ -302,7 +302,7 @@ namespace MoneyTracker.Utilities
             return retDictionary;
         }
 
-        private static decimal GetCurrentBalance(Account account)
+        public static decimal GetCurrentBalance(Account account)
         {
             PrimaryContext db = new PrimaryContext();
             //This statement is simplified, will not always work

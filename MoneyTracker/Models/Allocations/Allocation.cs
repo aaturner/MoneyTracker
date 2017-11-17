@@ -15,9 +15,11 @@ namespace MoneyTracker.Models.Allocations
 
         public int Id { get; set; }
 
+        [DisplayName("Allocation")]
         [Required]
         public string Name { get; set; }
 
+        [DisplayName("Description")]
         [Required]
         public string Description { get; set; }
 

@@ -38,19 +38,19 @@ namespace MoneyTracker.Controllers
         }
 
         // GET: AllocationChanges/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             ViewBag.AllocationId = new SelectList(db.Allocations, "Id", "Name").OrderBy(x => x.Text);
-            //IEnumerable<SelectListItem> selectList =   ---Discriminator not accessible via linq reflection 
-            //    from c in db.Allocations
-            //    select new SelectListItem
-            //    {
-            //        Text = c.GetType().GetProperty("Discriminator").ToString() + " - " + c.Name,
-            //        Value = c.AccountId.ToString()
+            AllocationChange change = new AllocationChange();
+            if (id != null)
+            {
+                change.AllocationId = (int)id;
+                change.Allocation = db.Allocations.Find(id);
+            }
+            change.EffectiveDateTime = DateTime.Now;
+            change.ChangeTypeEnum = Models.Enums.ChangeTypeEnum.LumpSum;
 
-            //    };
-            //ViewBag.AllocationId = selectList;
-            return View();
+            return View(change);
         }
 
         // POST: AllocationChanges/Create
@@ -58,7 +58,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EffectiveDateTime,Amount,ChangeTypeEnum,Recurance,AllocationId")] AllocationChange allocationChange)
+        public ActionResult Create([Bind(Include = "Id,EffectiveDateTime,Amount,ChangeTypeEnum,Recurance,AllocationId,IsRecurring")] AllocationChange allocationChange)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,EffectiveDateTime,Amount,ChangeTypeEnum,Recurance,AllocationId")] AllocationChange allocationChange)
+        public ActionResult Edit([Bind(Include = "Id,EffectiveDateTime,Amount,ChangeTypeEnum,Recurance,AllocationId,IsRecurring")] AllocationChange allocationChange)
         {
             if (ModelState.IsValid)
             {

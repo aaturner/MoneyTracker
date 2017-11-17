@@ -31,6 +31,16 @@ namespace MoneyTracker.Utilities
             NumYearsToDisplay
         }
 
+        public enum AllocationType
+        {
+            Income,
+            Expense,
+            [Display(Name = "Loans")]
+            Loan,
+            [Display(Name="Save/Invest")]
+            Si
+        }
+
 
     }
 }

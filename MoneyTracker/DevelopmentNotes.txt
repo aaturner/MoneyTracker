@@ -24,15 +24,15 @@ Transactions
 
 
 Budget:
-	Display Saving/Investments
-	Use change events to change budget allocations
-	Test and refine change events by month
-	Test and refine display of Actual by month
-	YTD
+x	Display Saving/Investments
+x	Use one time change events on budget allocations
+	Use Allocation Changes to adjust allocations so past budgets are accurate
+x	Test and refine display of Actual by month
+x	Residual
 		Balance on months this year (with data)
 	Grid Buttons
 		Add to category button to add new allocation to this category
-		Edit button (pencil) to edit an allocation
+x		Edit button (pencil) to edit an allocation
 
 Enums
 	Consolidate Model and Utility Enums

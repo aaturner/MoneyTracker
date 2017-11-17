@@ -20,6 +20,7 @@ namespace MoneyTracker.Models
 
         public int Id { get; set; }
 
+        [DisplayName("Account")]
         public string Name { get; set; }
         public string Institution { get; set; }
         public string Website { get; set; }
