@@ -1,38 +1,14 @@
-﻿Weekly recurrance
-x	Not showing numWeeks * weekly income on budget				
-x	Not displaying year dropdown correctly on budget view		found issue with settings, need to improve them.
-x	Make recurrance an object on its own
-
-
-	Create partial View for recurrance.
-x		View in Expense Create complete
-x		Controller binding working on create
-		Next
-x			Edit View
-x			remove old recurrence references
-x			Add new create and edit view/controller code
-x			Eventually hide recurrence fields based on Frequency
-
-	 
-
-
-
-
+﻿
 Transactions
 	API to get from bank.
 
 
 
 Budget:
-x	Display Saving/Investments
-x	Use one time change events on budget allocations
-	Use Allocation Changes to adjust allocations so past budgets are accurate
-x	Test and refine display of Actual by month
-x	Residual
-		Balance on months this year (with data)
-	Grid Buttons
-		Add to category button to add new allocation to this category
-x		Edit button (pencil) to edit an allocation
+	Calc channge event for weekly, single occurance changes results in numweeks*change amount rather than only change amount.
+	Pass default date and allocation id to change event creation screen.
+	Add loan and save/invest to seed method
+	Have Change event create view and allocation edit view appear below budget to add rather than on new screenc
 
 Enums
 	Consolidate Model and Utility Enums
@@ -58,11 +34,6 @@ Transactions:
 	Commit button on TransactionsUpload moves from TransactionsTemp to Transactions
 	Save Uncommitted Saves changes to uncommitted transactions (Allocation dropdown)
 	Remove Select Column
-
-HouseKeeping
-	Edit links on Budget page
-		Include Loans, savings/investment
-	Edit links on Home page
 
 
 

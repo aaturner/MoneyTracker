@@ -28,6 +28,8 @@ namespace MoneyTracker.AppModels
 
         public Enums.TableRowType RowType { get; set; }
 
+        public int rowId { get; set; }
+        public string Header { get; set; }
         public string AccountType { get; set; }
         public string AccountName { get; set; }
 

@@ -48,7 +48,7 @@ namespace MoneyTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Institution,Website")] Account account)
+        public ActionResult Create([Bind(Include = "Id,Name,Apr,AccountType,Institution,Website")] Account account)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace MoneyTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Institution,Website")] Account account)
+        public ActionResult Edit([Bind(Include = "Id,Name,Apr,AccountType,Institution,Website")] Account account)
         {
             if (ModelState.IsValid)
             {

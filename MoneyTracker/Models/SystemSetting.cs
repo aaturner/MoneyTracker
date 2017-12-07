@@ -17,10 +17,10 @@ namespace MoneyTracker.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Date Time")]
-        public DateTime SettingDate { get; set; }
+        public DateTime? SettingDate { get; set; }
         [DisplayName("Day of Week")]
-        public DayOfWeek SettingDay { get; set; }
+        public DayOfWeek? SettingDay { get; set; }
         [DisplayName("Whole Number")]
-        public int SettingInt { get; set; }
+        public int? SettingInt { get; set; }
     }
 }

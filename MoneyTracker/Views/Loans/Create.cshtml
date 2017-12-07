@@ -45,22 +45,15 @@
                 @Html.ValidationMessageFor(model => model.AccountId, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group">
-            @Html.LabelFor(model => model.Apr, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.LoanAccountId, "LoanAccountId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Apr, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Apr, "", new { @class = "text-danger" })
+                @Html.DropDownList("LoanAccountId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LoanAccountId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.AssetCurrentValue, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AssetCurrentValue, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AssetCurrentValue, "", new { @class = "text-danger" })
-            </div>
-        </div>
         
         @Html.Partial("~/Views/Shared/Recurrence/Create.cshtml")
 

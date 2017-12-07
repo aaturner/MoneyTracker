@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using MoneyTracker.Models.Allocations;
@@ -16,12 +17,18 @@ namespace MoneyTracker.Models
             this.Transactions = new HashSet<Transaction>();
             this.Incomes = new HashSet<Income>();
             this.Expenses = new HashSet<Expense>();
+            AccountType = Utilities.Enums.AccountType.Checking;
+            Apr = 0;
         }
 
         public int Id { get; set; }
-
+        [Required]
         [DisplayName("Account")]
         public string Name { get; set; }
+        [Required]
+        [DisplayName("Account Type")]
+        public Utilities.Enums.AccountType AccountType { get; set; }
+        public decimal Apr { get; set; }
         public string Institution { get; set; }
         public string Website { get; set; }
 

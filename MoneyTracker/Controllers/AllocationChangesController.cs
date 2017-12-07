@@ -38,14 +38,14 @@ namespace MoneyTracker.Controllers
         }
 
         // GET: AllocationChanges/Create
-        public ActionResult Create(int? id)
+        public ActionResult Create(int? AllocationId)
         {
             ViewBag.AllocationId = new SelectList(db.Allocations, "Id", "Name").OrderBy(x => x.Text);
             AllocationChange change = new AllocationChange();
-            if (id != null)
+            if (AllocationId != null)
             {
-                change.AllocationId = (int)id;
-                change.Allocation = db.Allocations.Find(id);
+                //change.AllocationId = (int)AllocationId;
+                change.Allocation = db.Allocations.Find(AllocationId);
             }
             change.EffectiveDateTime = DateTime.Now;
             change.ChangeTypeEnum = Models.Enums.ChangeTypeEnum.LumpSum;
@@ -68,7 +68,7 @@ namespace MoneyTracker.Controllers
             }
 
             ViewBag.AllocationId = new SelectList(db.Allocations, "Id", "Name", allocationChange.AllocationId);
-            return View(allocationChange);
+            return View("~/Views/Budget/Index.cshtml");
         }
 
         // GET: AllocationChanges/Edit/5

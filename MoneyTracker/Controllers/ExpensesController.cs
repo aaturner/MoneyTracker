@@ -61,7 +61,7 @@ namespace MoneyTracker.Controllers
 
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", expense.AccountId);
             ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name", expense.ExpenseCategoryId).OrderBy(x => x.Text);
-            return View(expense);
+            return View("~/Views/Budget/Index.cshtml");
         }
 
         // GET: Expenses/Edit/5
@@ -121,7 +121,7 @@ namespace MoneyTracker.Controllers
             }
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", expense.AccountId);
             ViewBag.ExpenseCategoryId = new SelectList(db.ExpenseCategories, "Id", "Name", expense.ExpenseCategoryId).OrderBy(x => x.Text);
-            return View(expense);
+            return View("~/Views/Budget/Index.cshtml");
         }
 
         // GET: Expenses/Delete/5

@@ -222,149 +222,45 @@
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\TransactionsUploadController.cs" />
     <Compile Include="DAL\GetData.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705072310034_InitialCreate.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705072310034_InitialCreate.Designer.cs">
-      <DependentUpon>201705072310034_InitialCreate.cs</DependentUpon>
+    <Compile Include="DAL\PrimaryMigrations\201712021956169_init.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201712021956169_init.Designer.cs">
+      <DependentUpon>201712021956169_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705120339059_5 11.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705120339059_5 11.Designer.cs">
-      <DependentUpon>201705120339059_5 11.cs</DependentUpon>
+    <Compile Include="DAL\PrimaryMigrations\201712050240161_12042017a.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201712050240161_12042017a.Designer.cs">
+      <DependentUpon>201712050240161_12042017a.cs</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705120352062_5 11 v2.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705120352062_5 11 v2.Designer.cs">
-      <DependentUpon>201705120352062_5 11 v2.cs</DependentUpon>
+    <Compile Include="DAL\PrimaryMigrations\201712050246150_12042017b.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201712050246150_12042017b.Designer.cs">
+      <DependentUpon>201712050246150_12042017b.cs</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705120359133_5 11 v3.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705120359133_5 11 v3.Designer.cs">
-      <DependentUpon>201705120359133_5 11 v3.cs</DependentUpon>
+    <Compile Include="DAL\PrimaryMigrations\201712051707443_12052017a.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201712051707443_12052017a.Designer.cs">
+      <DependentUpon>201712051707443_12052017a.cs</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705120400541_5 11 v4.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705120400541_5 11 v4.Designer.cs">
-      <DependentUpon>201705120400541_5 11 v4.cs</DependentUpon>
+    <Compile Include="DAL\PrimaryMigrations\201712052315143_12052017b.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201712052315143_12052017b.Designer.cs">
+      <DependentUpon>201712052315143_12052017b.cs</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705192124349_0519.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705192124349_0519.Designer.cs">
-      <DependentUpon>201705192124349_0519.cs</DependentUpon>
+    <Compile Include="DAL\PrimaryMigrations\201712061743416_12052018a.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201712061743416_12052018a.Designer.cs">
+      <DependentUpon>201712061743416_12052018a.cs</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705192128128_0519_2.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705192128128_0519_2.Designer.cs">
-      <DependentUpon>201705192128128_0519_2.cs</DependentUpon>
+    <Compile Include="DAL\PrimaryMigrations\201712061757536_12052018b.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201712061757536_12052018b.Designer.cs">
+      <DependentUpon>201712061757536_12052018b.cs</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705210242007_0520.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705210242007_0520.Designer.cs">
-      <DependentUpon>201705210242007_0520.cs</DependentUpon>
+    <Compile Include="DAL\PrimaryMigrations\201712061944362_12052018c.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201712061944362_12052018c.Designer.cs">
+      <DependentUpon>201712061944362_12052018c.cs</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705212106506_0521.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705212106506_0521.Designer.cs">
-      <DependentUpon>201705212106506_0521.cs</DependentUpon>
+    <Compile Include="DAL\PrimaryMigrations\201712061953504_12052018d.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201712061953504_12052018d.Designer.cs">
+      <DependentUpon>201712061953504_12052018d.cs</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705222253419_0522_3.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705222253419_0522_3.Designer.cs">
-      <DependentUpon>201705222253419_0522_3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705222300100_0522_4.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705222300100_0522_4.Designer.cs">
-      <DependentUpon>201705222300100_0522_4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201705312224111_0531.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201705312224111_0531.Designer.cs">
-      <DependentUpon>201705312224111_0531.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201706021617314_0602.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201706021617314_0602.Designer.cs">
-      <DependentUpon>201706021617314_0602.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201706022130226_06022.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201706022130226_06022.Designer.cs">
-      <DependentUpon>201706022130226_06022.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201706022137331_06023.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201706022137331_06023.Designer.cs">
-      <DependentUpon>201706022137331_06023.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201706022158186_06024.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201706022158186_06024.Designer.cs">
-      <DependentUpon>201706022158186_06024.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201706022318058_06025.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201706022318058_06025.Designer.cs">
-      <DependentUpon>201706022318058_06025.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201706042203074_0604.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201706042203074_0604.Designer.cs">
-      <DependentUpon>201706042203074_0604.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201706042251542_06042.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201706042251542_06042.Designer.cs">
-      <DependentUpon>201706042251542_06042.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201706042309076_06043.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201706042309076_06043.Designer.cs">
-      <DependentUpon>201706042309076_06043.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201706042314387_06045.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201706042314387_06045.Designer.cs">
-      <DependentUpon>201706042314387_06045.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201707131438452_0712.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201707131438452_0712.Designer.cs">
-      <DependentUpon>201707131438452_0712.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201707131507553_071202.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201707131507553_071202.Designer.cs">
-      <DependentUpon>201707131507553_071202.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201708030017338_0802a.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201708030017338_0802a.Designer.cs">
-      <DependentUpon>201708030017338_0802a.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201708042043074_0804a.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201708042043074_0804a.Designer.cs">
-      <DependentUpon>201708042043074_0804a.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201709030035416_0902a.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201709030035416_0902a.Designer.cs">
-      <DependentUpon>201709030035416_0902a.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201709030151289_0902b.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201709030151289_0902b.Designer.cs">
-      <DependentUpon>201709030151289_0902b.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201709030153399_0902c.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201709030153399_0902c.Designer.cs">
-      <DependentUpon>201709030153399_0902c.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201709030504003_0902d.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201709030504003_0902d.Designer.cs">
-      <DependentUpon>201709030504003_0902d.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201709042236273_0904a.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201709042236273_0904a.Designer.cs">
-      <DependentUpon>201709042236273_0904a.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201711050439041_11042017a.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201711050439041_11042017a.Designer.cs">
-      <DependentUpon>201711050439041_11042017a.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201711060359094_11052017a.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201711060359094_11052017a.Designer.cs">
-      <DependentUpon>201711060359094_11052017a.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201711060427005_11052017b.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201711060427005_11052017b.Designer.cs">
-      <DependentUpon>201711060427005_11052017b.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201711110530363_11102017a.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201711110530363_11102017a.Designer.cs">
-      <DependentUpon>201711110530363_11102017a.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201711152126373_11122017b.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201711152126373_11122017b.Designer.cs">
-      <DependentUpon>201711152126373_11122017b.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PrimaryMigrations\201711162347135_11162017c.cs" />
-    <Compile Include="DAL\PrimaryMigrations\201711162347135_11162017c.Designer.cs">
-      <DependentUpon>201711162347135_11162017c.cs</DependentUpon>
+    <Compile Include="DAL\PrimaryMigrations\201712071616251_12072017a.cs" />
+    <Compile Include="DAL\PrimaryMigrations\201712071616251_12072017a.Designer.cs">
+      <DependentUpon>201712071616251_12072017a.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\AttributeExtensions.cs" />
     <Compile Include="Extensions\DateExtensions.cs" />
@@ -376,6 +272,7 @@
     <Compile Include="Models\Allocations\SavingsInvestment.cs" />
     <Compile Include="Models\ChangeEvent.cs" />
     <Compile Include="Models\DataObjects\Month.cs" />
+    <Compile Include="Models\PayrollDeduction.cs" />
     <Compile Include="Models\Recurrence.cs" />
     <Compile Include="Models\Enums\ChangeTypeEnum.cs" />
     <Compile Include="Models\Enums\TransactionTypeEnum.cs" />
@@ -646,113 +543,35 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705072310034_InitialCreate.resx">
-      <DependentUpon>201705072310034_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201712021956169_init.resx">
+      <DependentUpon>201712021956169_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705120339059_5 11.resx">
-      <DependentUpon>201705120339059_5 11.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201712050240161_12042017a.resx">
+      <DependentUpon>201712050240161_12042017a.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705120352062_5 11 v2.resx">
-      <DependentUpon>201705120352062_5 11 v2.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201712050246150_12042017b.resx">
+      <DependentUpon>201712050246150_12042017b.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705120359133_5 11 v3.resx">
-      <DependentUpon>201705120359133_5 11 v3.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201712051707443_12052017a.resx">
+      <DependentUpon>201712051707443_12052017a.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705120400541_5 11 v4.resx">
-      <DependentUpon>201705120400541_5 11 v4.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201712052315143_12052017b.resx">
+      <DependentUpon>201712052315143_12052017b.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705192124349_0519.resx">
-      <DependentUpon>201705192124349_0519.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201712061743416_12052018a.resx">
+      <DependentUpon>201712061743416_12052018a.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705192128128_0519_2.resx">
-      <DependentUpon>201705192128128_0519_2.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201712061757536_12052018b.resx">
+      <DependentUpon>201712061757536_12052018b.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705210242007_0520.resx">
-      <DependentUpon>201705210242007_0520.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201712061944362_12052018c.resx">
+      <DependentUpon>201712061944362_12052018c.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705212106506_0521.resx">
-      <DependentUpon>201705212106506_0521.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201712061953504_12052018d.resx">
+      <DependentUpon>201712061953504_12052018d.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705222253419_0522_3.resx">
-      <DependentUpon>201705222253419_0522_3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705222300100_0522_4.resx">
-      <DependentUpon>201705222300100_0522_4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201705312224111_0531.resx">
-      <DependentUpon>201705312224111_0531.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201706021617314_0602.resx">
-      <DependentUpon>201706021617314_0602.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201706022130226_06022.resx">
-      <DependentUpon>201706022130226_06022.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201706022137331_06023.resx">
-      <DependentUpon>201706022137331_06023.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201706022158186_06024.resx">
-      <DependentUpon>201706022158186_06024.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201706022318058_06025.resx">
-      <DependentUpon>201706022318058_06025.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201706042203074_0604.resx">
-      <DependentUpon>201706042203074_0604.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201706042251542_06042.resx">
-      <DependentUpon>201706042251542_06042.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201706042309076_06043.resx">
-      <DependentUpon>201706042309076_06043.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201706042314387_06045.resx">
-      <DependentUpon>201706042314387_06045.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201707131438452_0712.resx">
-      <DependentUpon>201707131438452_0712.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201707131507553_071202.resx">
-      <DependentUpon>201707131507553_071202.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201708030017338_0802a.resx">
-      <DependentUpon>201708030017338_0802a.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201708042043074_0804a.resx">
-      <DependentUpon>201708042043074_0804a.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201709030035416_0902a.resx">
-      <DependentUpon>201709030035416_0902a.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201709030151289_0902b.resx">
-      <DependentUpon>201709030151289_0902b.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201709030153399_0902c.resx">
-      <DependentUpon>201709030153399_0902c.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201709030504003_0902d.resx">
-      <DependentUpon>201709030504003_0902d.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201709042236273_0904a.resx">
-      <DependentUpon>201709042236273_0904a.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201711050439041_11042017a.resx">
-      <DependentUpon>201711050439041_11042017a.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201711060359094_11052017a.resx">
-      <DependentUpon>201711060359094_11052017a.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201711060427005_11052017b.resx">
-      <DependentUpon>201711060427005_11052017b.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201711110530363_11102017a.resx">
-      <DependentUpon>201711110530363_11102017a.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201711152126373_11122017b.resx">
-      <DependentUpon>201711152126373_11122017b.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DAL\PrimaryMigrations\201711162347135_11162017c.resx">
-      <DependentUpon>201711162347135_11162017c.cs</DependentUpon>
+    <EmbeddedResource Include="DAL\PrimaryMigrations\201712071616251_12072017a.resx">
+      <DependentUpon>201712071616251_12072017a.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

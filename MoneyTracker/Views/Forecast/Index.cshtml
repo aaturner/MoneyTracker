@@ -1,6 +1,5 @@
 ﻿@{
     ViewBag.Title = "Index";
-    string test = "initial";
     string style = string.Empty;
 
 }
@@ -16,9 +15,10 @@
     <table class="table-bordered">
         <thead>
             <tr>
+
                 <th>Type</th>
                 <th>Name</th>
-                <th>Month 0</th>
+                <th>Current Bal</th>
                 <th>Month 1</th>
                 <th>Month 2</th>
                 <th>Month 3</th>
@@ -47,39 +47,39 @@
                 }
                 <tr style="@style">
                     <td>
-                        @Html.DisplayFor(modelItem => item.AccountType)
+                        @Html.DisplayFor(modelItem => item.Header)
                     </td>
                     <td style="padding-right: 10px">
                         @Html.DisplayFor(modelItem => item.AccountName)
                     </td>
-                    <td style="text-align: right; width:100px">
+                    <td style="text-align: right; width: 100px">
                         @Html.DisplayFor(modelItem => item.MonthCurrent)
                     </td>
-                    <td style="text-align: right; width:100px">
+                    <td style="text-align: right; width: 100px">
                         @Html.DisplayFor(modelItem => item.Month1)
                     </td>
-                    <td style="text-align: right; width:100px">
+                    <td style="text-align: right; width: 100px">
                         @Html.DisplayFor(modelItem => item.Month2)
                     </td>
-                    <td style="text-align: right; width:100px">
+                    <td style="text-align: right; width: 100px">
                         @Html.DisplayFor(modelItem => item.Month3)
                     </td>
-                    <td style="text-align: right; width:100px">
+                    <td style="text-align: right; width: 100px">
                         @Html.DisplayFor(modelItem => item.Month4)
                     </td>
-                    <td style="text-align: right; width:100px">
+                    <td style="text-align: right; width: 100px">
                         @Html.DisplayFor(modelItem => item.Month5)
                     </td>
-                    <td style="text-align: right; width:100px">
+                    <td style="text-align: right; width: 100px">
                         @Html.DisplayFor(modelItem => item.Month6)
                     </td>
-                    <td style="text-align: right; width:100px">
+                    <td style="text-align: right; width: 100px">
                         @Html.DisplayFor(modelItem => item.Year1)
                     </td>
-                    <td style="text-align: right; width:100px">
+                    <td style="text-align: right; width: 100px">
                         @Html.DisplayFor(modelItem => item.Year2)
                     </td>
-                    <td style="text-align: right; width:100px">
+                    <td style="text-align: right; width: 100px">
                         @Html.DisplayFor(modelItem => item.Year3)
                     </td>
                 </tr>

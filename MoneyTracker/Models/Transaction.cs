@@ -39,7 +39,7 @@ namespace MoneyTracker.Models
         public int AccountId { get; set; }
         public virtual Account Account { get; set; }
 
-        public Nullable<int> AllocationId { get; set; }
+        public int? AllocationId { get; set; }
         public virtual Allocation Allocation { get; set; }
 
     }

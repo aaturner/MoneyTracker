@@ -12,12 +12,13 @@ namespace MoneyTracker.Models
     {
         public int Id { get; set; }
 
+        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime EffectiveDateTime { get; set; }
 
         public bool IsRecurring { get; set; }
-
+        [Required]
         public decimal Amount { get; set; }
         public Enums.ChangeTypeEnum ChangeTypeEnum { get; set; }
 

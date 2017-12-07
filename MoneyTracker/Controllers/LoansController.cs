@@ -39,7 +39,8 @@ namespace MoneyTracker.Controllers
         // GET: Loans/Create
         public ActionResult Create()
         {
-            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name");
+            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name").OrderBy(x => x.Text);
+            ViewBag.LoanAccountId = new SelectList(db.Accounts, "Id", "Name").OrderBy(x => x.Text);
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,Amount,AccountId,Apr,AssetCurrentValue")] Loan loan,
+        public ActionResult Create([Bind(Include = "Id,Name,Description,IsMonthly,Amount,AccountId,LoanAccountId")] Loan loan,
             [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)
@@ -59,7 +60,8 @@ namespace MoneyTracker.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", loan.AccountId);
+            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", loan.AccountId).OrderBy(x => x.Text);
+            ViewBag.LoanAccountId = new SelectList(db.Accounts, "Id", "Name", loan.LoanAccountId).OrderBy(x => x.Text);
             return View(loan);
         }
 
@@ -84,6 +86,7 @@ namespace MoneyTracker.Controllers
                 };
             }
             ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", loan.AccountId).OrderBy(x => x.Text);
+            ViewBag.LoanAccountId = new SelectList(db.Accounts, "Id", "Name", loan.LoanAccountId).OrderBy(x => x.Text);
             return View(loan);
         }
 
@@ -92,7 +95,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,IsMonthly,Amount,AccountId,Apr,AssetCurrentValue")] Loan loan,
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,IsMonthly,Amount,AccountId")] Loan loan,
             [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)
@@ -117,7 +120,8 @@ namespace MoneyTracker.Controllers
 
                 return RedirectToAction("Index");
             }
-            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", loan.AccountId);
+            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name", loan.AccountId).OrderBy(x => x.Text);
+            ViewBag.LoanAccountId = new SelectList(db.Accounts, "Id", "Name", loan.LoanAccountId).OrderBy(x => x.Text);
             return View(loan);
         }
 

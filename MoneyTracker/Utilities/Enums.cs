@@ -17,6 +17,7 @@ namespace MoneyTracker.Utilities
             expense,
             loan,
             si,
+            payrollDeduction,
             summary,
             total
         }
@@ -39,6 +40,17 @@ namespace MoneyTracker.Utilities
             Loan,
             [Display(Name="Save/Invest")]
             Si
+        }
+
+        public enum AccountType
+        {
+            Checking,
+            Loan,
+            [Display(Name = "Credit Card")]
+            CreditCard,
+            Savings,
+            Investment
+            
         }
 
 

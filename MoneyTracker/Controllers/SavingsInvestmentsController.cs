@@ -39,8 +39,8 @@ namespace MoneyTracker.Controllers
         // GET: SavingsInvestments/Create
         public ActionResult Create()
         {
-            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name");
-            ViewBag.DestinationAccountId = new SelectList(db.Accounts, "Id", "Name");
+            ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Name").OrderBy(x => x.Text);
+            ViewBag.DestinationAccountId = new SelectList(db.Accounts, "Id", "Name").OrderBy(x => x.Text);
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,AllocationType,Amount,AccountId,Institution,Notes,Apr,CurrentValue,DestinationAccountId")] SavingsInvestment savingsInvestment,
+        public ActionResult Create([Bind(Include = "Id,Name,Description,AllocationType,Amount,AccountId,Notes,DestinationAccountId")] SavingsInvestment savingsInvestment,
             [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)
@@ -88,7 +88,7 @@ namespace MoneyTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,AllocationType,Amount,AccountId,Institution,Notes,Apr,CurrentValue,DestinationAccountId")] SavingsInvestment savingsInvestment,
+        public ActionResult Edit([Bind(Include = "Id,Name,Description,AllocationType,Amount,AccountId,Notes,DestinationAccountId")] SavingsInvestment savingsInvestment,
             [Bind(Include = "RecurrenceFrequencyEnum, RecuranceStartDate, RecuranceEndDate, RecuranceDayNumber")] Recurrence recurrence)
         {
             if (ModelState.IsValid)

@@ -87,7 +87,7 @@ namespace MoneyTracker.Utilities
             foreach (Loan loan in Loans)
             {
                 //Apply change events
-                decimal newAmount = General.GetAllocationWithChangeEventsByMonth(loan, selectedMonth,selectedMonth);
+                decimal newAmount = General.GetAllocationWithChangeEventsByMonth(loan, selectedMonth);
 
                 //Calculate Actuals
                 decimal transactSum = GetMonthTransactionActuals(loan, selectedMonth);
@@ -126,8 +126,30 @@ namespace MoneyTracker.Utilities
             retList.Find(x => x.Column1.Contains("Save")).MoneyCol2 = actualSubTotalDecimal;
         }
 
+        public static void PayrollDeductionLines(List<BudgetRow> retList, int selectedMonth)
+        {
+            PrimaryContext db = new PrimaryContext();
+            IEnumerable<PayrollDeduction> PdEnumerable = db.PayrollDeductions.ToList();
+            decimal subTotalDecimal = decimal.Zero;
+            decimal actualSubTotalDecimal = decimal.Zero;
+            foreach (var pd in PdEnumerable)
+            {
+                //Apply change events Later
+                //decimal newAmount = General.GetAllocationWithChangeEventsByMonth(si, selectedMonth);
+                //decimal transactSum = GetMonthTransactionActuals(si, selectedMonth);
 
-        public static BudgetRow BuildHeader1(Enums.AllocationType allocationType)
+                //Need to add current Bal in place of 100.00m
+                decimal bal = 100.00m;
+                retList.Add(new BudgetRow("", "", pd.Name, "", pd.Amount, bal,Enums.TableRowType.payrollDeduction, pd.Id));
+                subTotalDecimal += pd.Amount;
+                actualSubTotalDecimal += bal;
+            }
+            retList.Find(x => x.Column1.Contains("Pay")).MoneyCol1 = subTotalDecimal;
+            retList.Find(x => x.Column1.Contains("Pay")).MoneyCol2 = actualSubTotalDecimal;
+        }
+
+
+        public static BudgetRow BuildAllocationHeader1(Enums.AllocationType allocationType)
         {
             BudgetRow retRow = new BudgetRow();
             retRow.Column1 = allocationType.ToDisplayName();
@@ -135,6 +157,7 @@ namespace MoneyTracker.Utilities
             retRow.AllocationId = (int)allocationType;
             return retRow;
         }
+
 
         public static BudgetRow BuildSummaryRow(List<BudgetRow> retList)
         {
@@ -228,20 +251,30 @@ namespace MoneyTracker.Utilities
         private static decimal GetResidualToDate(Allocation allocation)
         {
             PrimaryContext db = new PrimaryContext();
+
             //Get List of Months
-            SystemSetting setting = db.SystemSettings.FirstOrDefault(x => x.Setting == Enums.SysSetting.AllocationOverUnderCalcDate);
-            DateTime start = setting.SettingDate;
+            DateTime start = DateTime.Now.AddMonths(-3);
+            SystemSetting setting;
+            if (db.SystemSettings.Any(x => x.Setting == Enums.SysSetting.AllocationOverUnderCalcDate))
+                {
+                 setting = db.SystemSettings.FirstOrDefault(x => x.Setting == Enums.SysSetting.AllocationOverUnderCalcDate);
+                    if (setting.SettingDate != null)
+                    {
+                        start = (DateTime)setting.SettingDate;
+                    }
+                }
+            
             List<Month> Months = Utilities.General.GetMonthList(start, 
                 DateTime.Now);
 
             //calculate total spent from cut off to now and total allocated
             decimal spentSum = decimal.Zero;
             decimal allocatedSum = decimal.Zero;
-            foreach (Month m in Months)
-            {
-                spentSum += GetMonthTransactionActuals(allocation, m.MonthNumber, m.Year);
-                allocatedSum += General.GetAllocationWithChangeEventsByMonth(allocation, m.MonthNumber, m.Year);
-            }
+            //foreach (Month m in Months)
+            //{
+            //    spentSum += GetMonthTransactionActuals(allocation, m.MonthNumber, m.Year);
+            //    allocatedSum += General.GetAllocationWithChangeEventsByMonth(allocation, m.MonthNumber, m.Year);
+            //}
             return allocatedSum - spentSum;
         }
 
@@ -249,17 +282,17 @@ namespace MoneyTracker.Utilities
         {
             PrimaryContext db = new PrimaryContext();
             decimal retVal = decimal.Zero;
-            if(db.LoanBalanceEntries.Any(x => x.LoanId == loan.Id))
-            {
-                List<LoanBalanceEntry> loanBalList = db.LoanBalanceEntries.Where(x => x.LoanId == loan.Id).OrderBy(x => x.Date).ToList();
-                LoanBalanceEntry entry = loanBalList.Last();
-                decimal lastKnown = entry.Amount;
-                TimeSpan span = DateTime.Now - entry.Date;
-                int months = span.GetMonths();
-                decimal allocatedPayments = loan.Amount * months ;
-                decimal interest = ((lastKnown - allocatedPayments / 2) * loan.Apr / 1200) * months;
-                retVal = lastKnown - allocatedPayments + interest;
-            }
+            //if(db.LoanBalanceEntries.Any(x => x.LoanId == loan.Id))
+            //{
+            //    List<LoanBalanceEntry> loanBalList = db.LoanBalanceEntries.Where(x => x.LoanId == loan.Id).OrderBy(x => x.Date).ToList();
+            //    LoanBalanceEntry entry = loanBalList.Last();
+            //    decimal lastKnown = entry.Amount;
+            //    TimeSpan span = DateTime.Now - entry.Date;
+            //    int months = span.GetMonths();
+            //    decimal allocatedPayments = loan.Amount * months ;
+            //    //decimal interest = ((lastKnown - allocatedPayments / 2) * loan.Apr / 1200) * months;
+            //    retVal = lastKnown - allocatedPayments + interest;
+            //}
             
 
             return retVal;

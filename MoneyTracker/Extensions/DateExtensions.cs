@@ -28,7 +28,17 @@ namespace MoneyTracker.Extensions
         public static int GetWeeksInMonth(this DateTime time)
         {
             PrimaryContext db = new PrimaryContext();
-            DayOfWeek settingDay = (DayOfWeek)Convert.ToInt16(db.SystemSettings.FirstOrDefault(x => x.Setting == Enums.SysSetting.WeekStartDay).SettingValue);
+            DayOfWeek settingDay;
+            if (db.SystemSettings.Any(x => x.Setting == Enums.SysSetting.WeekStartDay))
+            {
+                settingDay = (DayOfWeek)Convert.ToInt16(db.SystemSettings.FirstOrDefault(x => x.Setting == Enums.SysSetting.WeekStartDay).SettingValue);
+            }
+            else
+            {
+                db.SystemSettings.Add(new SystemSetting() {Setting = Enums.SysSetting.WeekStartDay, SettingInt = (int)DayOfWeek.Monday});
+                db.SaveChanges();
+                settingDay = DayOfWeek.Monday;
+            }
             
             int daysInMonth = _gc.GetDaysInMonth(time.Year, time.Month);
             DayOfWeek firstDay = _gc.GetDayOfWeek(new DateTime(time.Year,time.Month,1));

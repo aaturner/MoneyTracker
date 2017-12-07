@@ -44,11 +44,11 @@ namespace MoneyTracker.Controllers.AppControllers
             List<BudgetRow> retList = new List<BudgetRow>();
             
             //Income
-            retList.Add(BudgetRowUtils.BuildHeader1(Enums.AllocationType.Income));
+            retList.Add(BudgetRowUtils.BuildAllocationHeader1(Enums.AllocationType.Income));
             BudgetRowUtils.IncomeLines(retList, selectedMonth);
             
             //Expense
-            retList.Add(BudgetRowUtils.BuildHeader1(Enums.AllocationType.Expense));
+            retList.Add(BudgetRowUtils.BuildAllocationHeader1(Enums.AllocationType.Expense));
             BudgetRowUtils.ExpenseLines(retList, selectedMonth);
             
             //Summary
@@ -61,12 +61,13 @@ namespace MoneyTracker.Controllers.AppControllers
             //retList.Add(new BudgetRow("","",TableRowType.expense));
             
             //Loans     
-            retList.Add(BudgetRowUtils.BuildHeader1(Enums.AllocationType.Loan));
+            retList.Add(BudgetRowUtils.BuildAllocationHeader1(Enums.AllocationType.Loan));
             BudgetRowUtils.LoanLines(retList, selectedMonth);
 
             //SavingsInvest
-            retList.Add(BudgetRowUtils.BuildHeader1(Enums.AllocationType.Si));
+            retList.Add(BudgetRowUtils.BuildAllocationHeader1(Enums.AllocationType.Si));
             BudgetRowUtils.SaveInvestLines(retList, selectedMonth);
+
 
             //Total
             BudgetRowUtils.BuildTotalLine(retList);

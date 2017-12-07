@@ -23,42 +23,7 @@ namespace MoneyTracker.Controllers.AppControllers
             return View(forecastCenter);
         }
 
-        //TODO add account ballances
 
-        private List<BudgetRow> BuildRows(int selectedMonth)
-        {
-            List<BudgetRow> retList = new List<BudgetRow>();
-            
-            //Income
-            retList.Add(BudgetRowUtils.BuildHeader1(Enums.AllocationType.Income));
-            BudgetRowUtils.IncomeLines(retList, selectedMonth);
-            
-            //Expense
-            retList.Add(BudgetRowUtils.BuildHeader1(Enums.AllocationType.Expense));
-            BudgetRowUtils.ExpenseLines(retList, selectedMonth);
-            
-            //Summary
-            retList.Add(BudgetRowUtils.BuildSummaryRow(retList));
-            if (retList.Count == 0)
-            {
-                retList.Add(new BudgetRow("TableRowSimple was found to be empty in the TableSimpleController", "", "", "", 0, 0, 
-                    Enums.TableRowType.summary,0));
-            }
-            //retList.Add(new BudgetRow("","",TableRowType.expense));
-            
-            //Loans     
-            retList.Add(BudgetRowUtils.BuildHeader1(Enums.AllocationType.Loan));
-            BudgetRowUtils.LoanLines(retList, selectedMonth);
-
-            //SavingsInvest
-            retList.Add(BudgetRowUtils.BuildHeader1(Enums.AllocationType.Si));
-            BudgetRowUtils.SaveInvestLines(retList, selectedMonth);
-
-            //Total
-            BudgetRowUtils.BuildTotalLine(retList);
-            return retList;
-
-        }
 
         public IEnumerable<SelectListItem> SelectedMonth
         {

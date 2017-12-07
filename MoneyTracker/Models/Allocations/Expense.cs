@@ -7,18 +7,16 @@ namespace MoneyTracker.Models.Allocations
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Expense()
         {
-            this.Transactions = new HashSet<Transaction>();
-            this.ChangeEvents = new HashSet<ChangeEvent>();
         }
 
 
         public int ExpenseCategoryId { get; set; }
         public virtual ExpenseCategory ExpenseCategory { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<Transaction> Transactions { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChangeEvent> ChangeEvents { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<ChangeEvent> ChangeEvents { get; set; }
     }
 }
